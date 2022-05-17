@@ -5,10 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        
+    text-align: center;
+
+    #gameBoard{
+    border: 3px solid;
+    }
+    #scoreText{
+    font-family: "consolas", monospace;
+    font-size: 100px;
+    }
+    #resetBtn{
+    font-family: "Permanent Marker", cursive;
+    font-size: 22px;
+    width: 100px;
+    height: 50px;
+    border: 4px solid;
+    border-radius: 15px;
+    cursor: pointer;
+    }
+    </style>
 </head>
 <body>
-    <div id="gameContainer" style="background-color: gray; height:400px;">
-        <canvas id="gameBoard" width="100px" height="100px" style="background-color: black;"> </canvas>
+    <div id="gameContainer">
+        <canvas id="gameBoard" width="500" height="500"></canvas>
+        <div id="scoreText">0 : 0</div>
+        <button id="resetBtn">Reset</button>
     </div>
     <script src="app.js"></script>
 </body>
