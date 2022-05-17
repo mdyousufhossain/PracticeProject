@@ -28,3 +28,5 @@ class KeyPadComponent extends Component {
         )
     }
 }
+
+export default KeyPadComponent;
