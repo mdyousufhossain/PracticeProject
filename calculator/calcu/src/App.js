@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import KeyPadComponent from './button';
+import KeyPadComponent from './KeyPadComponent';
 import ResultComponent from "./ResultComponent";
 
 
 class App extends Component{
   constructor(){
       super();
+
       this.state = {
         result:""
       }
