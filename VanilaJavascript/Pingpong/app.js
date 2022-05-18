@@ -20,7 +20,7 @@ const   gameWidth = gameBoard.width,
         ballBorderColor = "black",
         ballRadius = 12.5,
         paddleSpeed = 60;
-
+        // console.log(gameHeight,gameWidth)
 let intervalID,
     ballSpeed,
     ballX = gameWidth / 2,
@@ -29,15 +29,19 @@ let intervalID,
     ballYDirection = 0,
     player1Score = 0,
     player2Score = 0;
+
+//padels
 let paddle1 = {
     width: 25,
     height: 100,
     x: 0,
     y: 0
 };
+
 let paddle2 = {
     width: 25,
     height: 100,
+    //this way we set paddels opposite direction of paddels1 board
     x: gameWidth - 25,
     y: gameHeight - 100
 };
