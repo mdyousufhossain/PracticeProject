@@ -16,7 +16,7 @@
     font-family: "consolas", monospace;
     font-size: 100px;
     }
-    #resetBtn{
+    button{
     font-family: "Permanent Marker", cursive;
     font-size: 22px;
     width: 100px;
@@ -25,13 +25,19 @@
     border-radius: 15px;
     cursor: pointer;
     }
+    h2{
+        font-family: "Permanent Marker", cursive;
+        font-size: 80px;
+    }
     </style>
 </head>
 <body>
-    <div id="gameContainer">
+    <div  align="center"   id="gameContainer">
         <canvas id="gameBoard" width="500" height="500"></canvas>
         <div id="scoreText">0 : 0</div>
         <button id="resetBtn">Reset</button>
+        <button id="start">start</button>
+        <h2>Press : Spacebar to start </h2>
     </div>
     <script src="app.js"></script>
 </body>

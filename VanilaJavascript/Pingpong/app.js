@@ -9,16 +9,17 @@ const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#scoreText");
 const resetBtn = document.querySelector("#resetBtn");
+const startBtn = document.querySelector("#start");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
-const boardBackground = "forestgreen";
+const boardBackground = "#413F42";
 const paddle1Color = "lightblue";
 const paddle2Color = "red";
 const paddleBorder = "black";
 const ballColor = "yellow";
 const ballBorderColor = "black";
 const ballRadius = 12.5;
-const paddleSpeed = 50;
+const paddleSpeed = 40;
 let intervalID;
 let ballSpeed;
 let ballX = gameWidth / 2;
@@ -42,19 +43,20 @@ let paddle2 = {
 
 window.addEventListener("keydown", changeDirection);
 resetBtn.addEventListener("click", resetGame);
+startBtn.addEventListener("click", gameStart);
+window.addEventListener('keydown',function(e){ if (e.keyCode === 32){
+    gameStart()
+}} )
+
 
 // gameStart();
 
- window.addEventListener('keydown',e.keyCode =>
-     if(e.keyCode===32){
-    gameStart();   
-     }
-)
 
 function gameStart(){
     createBall();
     nextTick();
 };
+
 function nextTick(){
     intervalID = setTimeout(() => {
         clearBoard();
@@ -94,8 +96,8 @@ function createBall(){
     else{
         ballYDirection = Math.random() * -1; //more random directions
     }
-    ballX = gameWidth / 2;
-    ballY = gameHeight / 2;
+    ballX = gameWidth / 1.5;
+    ballY = gameHeight / 1.5;
     drawBall(ballX, ballY);
 };
 function moveBall(){
@@ -205,4 +207,3 @@ function resetGame(){
     
 };
 
-window.addEventListener('keydown', (e)=> console.log(e.keyCode))
