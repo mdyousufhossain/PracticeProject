@@ -1,17 +1,29 @@
-import './App.css';
-import People from './People';
+import React from "react"
+import { useEffect } from "react";
 
 
-function App() {
-  return (
-    <div className='App'>
+//process.env.REACT_APP_API_KEY
+const _API_URL = `http://www.omdbapi.com/?i=tt3896198&apikey=6e952c93`;
 
-    <People name={'buni'} age={301} cororona={true}/>
-    <People name={'dead'} age={701} cororona={true}/>
-    <People name={'notleaveing'} age={801} cororona={true}/>
+const App = () =>{
+    const searchMovies = async(title) =>{
+        const response = await fetch(`${_API_URL}&s=${title}`)
+        const data = await response.json();
 
-    </div>
-  );
+        console.log(data)
+    }
+    
+    useEffect(() =>{
+        searchMovies('')
+        
+    },[]);
+
+    return (
+            <div>
+                
+                <h1>Hello there</h1>
+            </div>
+    );
 }
 
-export default App;
+export { App  }
