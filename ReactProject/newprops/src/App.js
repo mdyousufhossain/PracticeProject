@@ -1,8 +1,8 @@
-import React from "react"
-import { useEffect } from "react";
+import React, { useState,useEffect } from "react"
 import './App.css';
 import { BiSearchAlt2 } from "react-icons/bi";
 // import SearchIcon from './search.svg';
+import MovieCard from "./MovieCard";
 
 const _API_URL = `http://www.omdbapi.com/?i=tt3896198&apikey=6e952c93`;
 
@@ -15,11 +15,13 @@ const movie1 = {
     }
 
 const App = () =>{
+    const [movies,setMovies] = useState([]);
+
     const searchMovies = async(title) =>{
         const response = await fetch(`${_API_URL}&s=${title}`)
         const data = await response.json();
 
-        console.log(data)
+        searchMovies(data.Search)
     }
     
     useEffect(() =>{
@@ -40,19 +42,21 @@ const App = () =>{
                         <BiSearchAlt2 />  
                     </h3>
                 </div>
-                <div className="container">
-                    <div className="movie">
-                        <div>
-                            <p> {movie1.Year}</p>
+                 {
+                     movies?.length>0
+                     ? (
+                        <div className="container">
+
+                        <MovieCard movie1={movies[0]}/>
+
                         </div>
-                        <div>
-                            <img src={movie1.Poster} alt={movie1.Title} />
-                        </div>
-                        <div>
-                            <span>{movie1.Type}</span>
-                        </div>
-                    </div>
-                </div>
+                       ):(
+                       <div className="empty">
+                           <h2>No Movies Available</h2>
+                       </div>
+                       )
+                 }
+               
             </div>
     );
 }
