@@ -95,7 +95,7 @@ h1 {
 
 .empty h2 {
   font-size: 1.25rem;
-  color: #f9d3b4;
+  color: #dddddd;
   font-family: var(--font-raleway);
 }
 
@@ -129,7 +129,7 @@ h1 {
   width: 100%;
   opacity: 0;
   top: 0;
-  color: #f9d3b4;
+  color: #eaeaea;
 }
 
 .movie:hover {
@@ -149,7 +149,7 @@ h1 {
 
 .movie div:nth-of-type(3) {
   z-index: 2;
-  background-color: #343739;
+  background-color: #1c2226;
   padding: 16px 24px 24px 24px;
 
   position: absolute;
@@ -164,13 +164,13 @@ h1 {
   font-size: 13px;
   letter-spacing: 2px;
   font-weight: 500;
-  color: #f0f0f0;
+  color: #dbdbdb;
 }
 
 .movie div:nth-of-type(3) h3 {
   margin-top: 5px;
   font-family: "Roboto Slab", serif;
-  color: #f9d3b4;
+  color: #e6e6e6;
 }
 
 .movie:hover div:nth-of-type(2) {
