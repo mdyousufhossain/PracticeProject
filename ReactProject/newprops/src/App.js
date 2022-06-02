@@ -6,13 +6,7 @@ import MovieCard from "./MovieCard";
 
 const _API_URL = `http://www.omdbapi.com/?i=tt3896198&apikey=6e952c93`;
 
-// const movie1 = {
-//         "Title": "Doctor Strange",
-//         "Year": "2016",
-//         "imdbID": "tt1211837",
-//         "Type": "movie",
-//         "Poster": "https://m.media-amazon.com/images/M/MV5BNjgwNzAzNjk1Nl5BMl5BanBnXkFtZTgwMzQ2NjI1OTE@._V1_SX300.jpg"
-//     }
+
 
 const App = () =>{
     const [movies,setMovies] = useState([]);
