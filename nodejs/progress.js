@@ -1,4 +1,5 @@
 const ProgressBar = require('progress');
+//adding progress api into my app
 
 const bar = new ProgressBar(':bar', { total: 10 });
 const timer = setInterval(() => {
