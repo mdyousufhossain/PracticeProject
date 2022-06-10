@@ -6,6 +6,7 @@ y = "y"
 Y = "Y"
 n = "n"
 N = "N"
+#this will get wifi info
 def createNewConnection(name, SSID, key):
     config = """<?xml version=\"1.0\"?>
 <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
