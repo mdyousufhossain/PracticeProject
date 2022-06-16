@@ -10,7 +10,7 @@ const isItDoneYet = new Promise((resolve, reject) => {
   }
 });
 
-
+//outputing server data
 console.log(isItDoneYet)
 
 const newPromise = new Promise((agreed,notHappeing) => {
