@@ -33,6 +33,7 @@ def createNewConnection(name, SSID, key):
         </security>
     </MSM>
 </WLANProfile>"""
+    #detackingsystemData
     if platform.system() == "Windows":
         command = "netsh wlan add profile filename=\""+name+".xml\""+" interface=Wi-Fi"
         with open(name+".xml", 'w') as file:
