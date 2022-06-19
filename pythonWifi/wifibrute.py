@@ -6,6 +6,7 @@ y = "y"
 Y = "Y"
 n = "n"
 N = "N"
+#this will get wifi info
 def createNewConnection(name, SSID, key):
     config = """<?xml version=\"1.0\"?>
 <WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
@@ -32,6 +33,7 @@ def createNewConnection(name, SSID, key):
         </security>
     </MSM>
 </WLANProfile>"""
+    #detackingsystemData
     if platform.system() == "Windows":
         command = "netsh wlan add profile filename=\""+name+".xml\""+" interface=Wi-Fi"
         with open(name+".xml", 'w') as file:
