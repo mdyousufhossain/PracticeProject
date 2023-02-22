@@ -1,0 +1,14 @@
+{
+  "name": "prototype",
+  "version": "1.0.0",
+  "description": "testing project",
+  "main": "scalable.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yousuf",
+  "license": "ISC",
+  "dependencies": {
+    "fetch": "^1.1.0"
+  }
+}
