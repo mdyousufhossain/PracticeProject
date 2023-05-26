@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "css-loader": "^6.7.1"
-  },
-  "dependencies": {
-    "dotenv": "^16.0.1"
-  }
-}
