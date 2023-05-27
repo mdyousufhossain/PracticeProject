@@ -1,11 +1,10 @@
 import "./App.css";
-import MouseHover from "./MouseFollower/MouseHover";
-import From from "./Form/Form";
-import AddingCart from "./AddingCart/AddingCart";
+import ToDo from "./Todo/Todo";
+
 function App() {
   return (
     <>
-      <AddingCart />
+      <ToDo />
     </>
   );
 }

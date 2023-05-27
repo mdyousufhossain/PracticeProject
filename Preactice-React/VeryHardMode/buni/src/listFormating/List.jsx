@@ -15,7 +15,7 @@ export default function List({ amount, Message = "No message" }) {
       <button onClick={HandleClick}>
         
         <li>
-          <del> {Message} : {amount} ✅ </del>
+        #{amount} :<del> {Message}  ✅ </del>
         </li>
 
       </button>
@@ -24,7 +24,7 @@ export default function List({ amount, Message = "No message" }) {
   return (
     <button onClick={HandleClick}>
       <li>
-        {Message}:{amount}
+      #{amount}:{Message}
       </li>
     </button>
   );
