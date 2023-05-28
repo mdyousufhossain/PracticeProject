@@ -22,21 +22,28 @@ function ToDo() {
     setList(updatedTask);
   };
 
+  const  enterKeyPressed = (e) => {
+    if (e.keyCode == 13) {
+       return handleAddTask()
+    } else {
+       return console.log(e.keyCode)
+    }
+ }
   console.log("task", task)
   console.log("list", list)
 
   return (
     <>
       <label>Add your Task</label>
-      <input type="text" value={task}  onChange={handleChangeInput} />
+      <input type="text" value={task}  onChange={handleChangeInput} onKeyUp={enterKeyPressed} />
 
       <button onClick={handleAddTask}>Add Task</button>
 
       <ul>
         {list &&
-          list.map((heda, index) => (
+          list.map((text, index) => (
             <li key={index}>
-              <List Message={heda} amount={index} />
+              <List Message={text} amount={index} />
               <button onClick={() => handleDeleteTask(index)}>Delete</button>
             </li>
           ))}

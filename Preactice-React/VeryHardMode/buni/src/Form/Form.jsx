@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function From() {
+function Form() {
   const [person, setPerson] = useState({
     firstName: "balamar",
     lastName: "buni",
@@ -52,4 +52,4 @@ function From() {
   );
 }
 
-export default From
+export default Form
