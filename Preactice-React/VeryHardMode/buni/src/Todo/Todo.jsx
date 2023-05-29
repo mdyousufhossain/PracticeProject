@@ -22,20 +22,21 @@ function ToDo() {
     setList(updatedTask);
   };
 
-  const  enterKeyPressed = (e) => {
+  const enterKeyPressed = (e) => {
     if (e.keyCode == 13) {
-       return handleAddTask()
-    } else {
-       return console.log(e.keyCode)
-    }
- }
-  console.log("task", task)
-  console.log("list", list)
+      return handleAddTask();
+    } 
+  };
 
   return (
     <>
       <label>Add your Task</label>
-      <input type="text" value={task}  onChange={handleChangeInput} onKeyUp={enterKeyPressed} />
+      <input
+        type="text"
+        value={task}
+        onChange={handleChangeInput}
+        onKeyUp={enterKeyPressed}
+      />
 
       <button onClick={handleAddTask}>Add Task</button>
 
