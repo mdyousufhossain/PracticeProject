@@ -36,20 +36,22 @@ app.get('/comments/new', (req, res ) => {
 
 app.post('/comments',(req,res) => {
     const { username,comment } = req.body
-    console.log(req.body)
+    // adding new element from the list 
     comments.push({ username,comment })
+    // using redirection after new comment
     res.redirect('/comments')
-    res.send("it working yeay ")
 })
 
 app.get("/form",(res,req) => {
-    console.log(req.req.body)
+    /**
+     * THIS IS FORM PAGE ADDING ITEM FROM FORM 
+     */
     res.res.send("this is home page")
 })
 
 app.post("/form",(res,req) => {
     const { fname , sname } =  req.req.body 
-
+    // SCRAPPING ITEM FROM THE body ! / its pretyy much as params
     res.res.send(`<h1> this is ${fname} and their surename is ${sname} </h1>`)
 })
 
