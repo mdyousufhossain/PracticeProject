@@ -2,6 +2,9 @@ const express = require("express");
 
 const app = express()
 
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
 const port = 3030
 
 
@@ -22,9 +25,12 @@ const comments = [
 
 
 
-app.get("/datas",(req,res) => {
-    res.render(comments)
+app.get("/",(req,res) => {
+    res.status(200).send(comments)
 })
+
+
+
 
 
 app.listen(port,() => {

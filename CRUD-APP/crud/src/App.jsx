@@ -1,14 +1,11 @@
-import response from "./Data/data";
 import "./App.css";
+import Data from "./Data/Data";
 
 function App() {
   return (
     <>
-      <h1>Hi ? </h1>
-
-      {response.map((item) => (
-        <li key={item}>{item.username}</li>
-      ))}
+      <h1>Hi </h1>
+      <Data />     
     </>
   );
 }
