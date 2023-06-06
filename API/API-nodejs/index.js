@@ -38,6 +38,7 @@ app.post('/comments',(req,res) => {
     const { username,comment } = req.body
     console.log(req.body)
     comments.push({ username,comment })
+    res.redirect('/comments')
     res.send("it working yeay ")
 })
 
