@@ -1,31 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import List from "../listFormating/List";
 
 function ToDo() {
   const [task, setTask] = useState("");
   const [list, setList] = useState([]);
 
+  console.log(list);
+  useEffect(() => {
+    fetch("http://localhost:8000/user")
+      .then((res) => res.json())
+      .then((data) => setList(data))
+      .catch((error) => console.error(error));
+  }, []);
+
   const handleChangeInput = (e) => {
     setTask(e.target.value);
   };
 
   const handleAddTask = () => {
-    if (task.trim() !== "") {
-      setList([...list, task]);
-      setTask(" ");
-    }
+    const newTask = { text: task }; // Create an object with the text property
+
+    fetch("http://localhost:8000/user/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTask), // Stringify the newTask object
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setList([...list, data]); // Add the returned data to the list
+        setTask(""); // Clear the input field
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleDeleteTask = (index) => {
-    const updatedTask = [...list];
-    updatedTask.splice(index, 1);
-    setList(updatedTask);
+    const updatedList = list.filter((_, i) => i !== index);
+    setList(updatedList);
   };
 
   const enterKeyPressed = (e) => {
     if (e.keyCode == 13) {
       return handleAddTask();
-    } 
+    }
   };
 
   return (
@@ -44,7 +62,7 @@ function ToDo() {
         {list &&
           list.map((text, index) => (
             <li key={index}>
-              <List Message={text} amount={index} />
+              {text.text}
               <button onClick={() => handleDeleteTask(index)}>Delete</button>
             </li>
           ))}
