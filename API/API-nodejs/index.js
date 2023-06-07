@@ -32,42 +32,25 @@ const comments = [
   }
 ]
 
-app.get('/comments',(req,res) => {
-  res.render('comments/index', { comments })
-})
- 
+app.get('/comments', (req, res) => {
+  res.render('comments/index', { comments });
+});
 
-app.get('/comments/new', (req, res ) => {
-    res.render('comments/new')
-})
+app.get('/comments/new', (req, res) => {
+  res.render('comments/new');
+});
 
+app.patch('/comments/:id', (req, res) => {
+  res.send('Updating Something!');
+});
 
-app.patch('comments/:id', (req,res) => {
-  res.send("Updating Something!")
-})
-
-app.post('/comments',(req,res) => {
-    const { username,comment } = req.body
-    // adding new element from the list 
-    comments.push({ username,comment,id: uuid() })
-    // using redirection after new comment
-    res.redirect('/comments')
-})
-
-app.get("/form",(res,req) => {
-    /**
-     * THIS IS FORM PAGE ADDING ITEM FROM FORM 
-     */
-    res.res.send("this is home page")
-})
-
-app.post("/form",(res,req) => {
-    const { fname , sname } =  req.req.body 
-    // SCRAPPING ITEM FROM THE body ! / its pretyy much as params
-    res.res.send(`<h1> this is ${fname} and their surename is ${sname} </h1>`)
-})
+app.post('/comments', (req, res) => {
+  const { username, comment } = req.body;
+  const newComment = { username, comment, id: uuid() };
+  comments.push(newComment);
+  res.redirect('/comments');
+});
 
 app.listen(port, () => {
-    
-    console.log("server running on http://localhost:8080/")
-})
+  console.log('Server running on http://localhost:8080/');
+});
