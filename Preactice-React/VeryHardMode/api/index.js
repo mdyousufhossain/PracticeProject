@@ -25,7 +25,7 @@ app.post("/user/update", (req, res) => {
 
   try {
     const { text } = req.body; // getting the input value from fron end 
-    const updatedUser = { text };
+    const updatedUser = { id:uuid(), text  };
     // updating the user array 
     users.push(updatedUser);
     // pusing it to front end 
@@ -35,6 +35,8 @@ app.post("/user/update", (req, res) => {
     res.status(500).json("oh noo its happeing again");
   }
 });
+
+
 
 // deploying server !
 app.listen(port, () => {

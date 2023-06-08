@@ -17,9 +17,9 @@ function ToDo() {
     setTask(e.target.value);
   };
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
+    
     const newTask = { text: task }; // Create an object with the text property
-
     fetch("http://localhost:8000/user/update", {
       method: "POST",
       headers: {
