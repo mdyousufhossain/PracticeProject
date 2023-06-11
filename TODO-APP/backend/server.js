@@ -14,10 +14,25 @@ app.get("/", (req,res) => {
 })
 
 
+/**
+ *  starting the server 
+ *  connecting the server using 
+ * http://localhost:3000
+ */
+const startServer = async () => {
+  try {
+    // server conneceting funtion
+    connectDB()
+    // starting the server 
+    app.listen(port, () => {
+      console.log(`server started at : http://localhost:${port}/`);
+    });
+      
+  } catch (error) {
 
-app.listen(port, () => {
-  console.log(`server started at : http://localhost:${port}/`);
-});
-
+    console.error(error)
+      
+  }
+}
 
 // mongodb+srv://yousafhossain:<yousaf123>@tododatabase.cmkwxhd.mongodb.net/?retryWrites=true&w=majority
