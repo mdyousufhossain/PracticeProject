@@ -4,25 +4,26 @@ const connectDB = require('./config/connectDB')
 
 
 
-const app = express();
-const port = 3000;
+const app = express(); 
+const port = 3000; // localhost port 
 
-connectDB()
 
 app.get("/", (req,res) => {
-  res.send("hey this is response")
+  res.send("hey this is response") 
 })
 
 
 /**
  *  starting the server 
- *  connecting the server using 
- * http://localhost:3000
+ *  connecting the MongdoDB database  
+ *  using default server address : http://localhost:3000
+ *  connecting database before the server 
+ * it will help to prevent weird bugs and error 
  */
 const startServer = async () => {
   try {
-    // server conneceting funtion
-    connectDB()
+    //calling for database connection 
+    await connectDB()
     // starting the server 
     app.listen(port, () => {
       console.log(`server started at : http://localhost:${port}/`);
@@ -35,4 +36,6 @@ const startServer = async () => {
   }
 }
 
-// mongodb+srv://yousafhossain:<yousaf123>@tododatabase.cmkwxhd.mongodb.net/?retryWrites=true&w=majority
+
+// calling server
+startServer()
