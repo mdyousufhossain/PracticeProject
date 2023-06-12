@@ -2,9 +2,9 @@ const dotenv = require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/connectDB");
 const Task = require("./model/taskModel");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const app = express();
-const port = process.env.PORT ||3000; // localhost port
+const port = process.env.PORT || 3000; // localhost port
 
 // Middleware
 
@@ -27,22 +27,27 @@ app.use(express.urlencoded({ extended: false }));
 //   next()
 // }
 
-app.get("/", (req, res) => {
-  res.send("hey this is response");
-});
-
 //   route
 app.post("/api/tasks", async (req, res) => {
-  try { 
+  try {
     // creating task in database
     const task = await Task.create(req.body);
     res.status(200).json(task);
   } catch (error) {
-    res.status(500).json({msg:error.message})
+    res.status(500).json({ msg: error.message });
   }
-});   
- 
+});
 
+// reading data
+app.get("/api/tasks", async (req, res) => {
+  try {
+    // extracing data from the database
+    const tasks = await Task.find();
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+});
 
 /**
  *  starting the server
