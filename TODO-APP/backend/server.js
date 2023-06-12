@@ -1,9 +1,10 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/connectDB");
-
+const Task = require("./model/taskModel");
+const mongoose = require("mongoose")
 const app = express();
-const port = 3000; // localhost port
+const port = process.env.PORT ||3000; // localhost port
 
 // Middleware
 
@@ -31,9 +32,17 @@ app.get("/", (req, res) => {
 });
 
 //   route
-app.post("api/tasks", async (req, res) => {
-  res.send("task has been created");
-});
+app.post("/api/tasks", async (req, res) => {
+  try { 
+    // creating task in database
+    const task = await Task.create(req.body);
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({msg:error.message})
+  }
+});   
+ 
+
 
 /**
  *  starting the server

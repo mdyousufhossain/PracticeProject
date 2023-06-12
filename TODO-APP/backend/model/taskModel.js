@@ -6,7 +6,7 @@ const taskSchema = mongoose.Schema({
         required: [true,"add a task please"]
     },
     completed: {
-        type : Boolean ,
+        type : Boolean,
         default: false, 
         required: true
     }
