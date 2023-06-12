@@ -1,31 +1,16 @@
 const express = require("express")
-const Task = require("../model/taskModel")
+const Task = require("../model/taskModel");
+const { createTask,readTask } = require("../controllers/taskController");
 
 const router = express.Router()
 
 
 
 //   route
-router.post("/api/tasks", async (req, res) => {
-    try {
-      // creating task in database
-      const task = await Task.create(req.body);
-      res.status(200).json(task);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
-  });
+router.post("/api/tasks", createTask);
   
 // reading data
-router.get("/api/tasks", async (req, res) => {
-    try {
-      // extracing data from the database
-      const tasks = await Task.find();
-      res.status(200).json(tasks);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
-  });
+router.get("/api/tasks", readTask);
 
 
 module.exports = router
