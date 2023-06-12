@@ -28,6 +28,9 @@ const getSingleTask = async (req, res) => {
     // destructering id from the database
     // querying data by findByeId method
     const task = await Task.findById(id);
+    // if id is not exist in database
+    if (!task) return res.status(404).json(`No item was found : ${id}`);
+
     res.status(200).json(task);
   } catch (error) {
     res.status(500).json({ msg: error.message });
