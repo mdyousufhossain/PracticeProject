@@ -40,7 +40,7 @@ const getSingleTask = async (req, res) => {
 // deleteting task
 const deleteTask = async (req, res) => {
   try {
-    // destrcuting id from the database params 
+    // destrcuting id from the database params
     const { id } = req.params;
     //using mangoose method to find and delete an item
     const task = await Task.findByIdAndDelete(id);
@@ -48,7 +48,28 @@ const deleteTask = async (req, res) => {
     if (!task) return res.status(404).json(`No task found   with ${id}`);
 
     res.status(200).send("Task has been deleted successfully");
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
 
+// updating funciton
+
+const updateTask = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // updateing item in database
+    const task = await Task.findByIdAndUpdate(
+      { _id: id }, // verifying the id
+      req.body, // updating the body
+      {
+        new: true, // new item will be accepted
+        runValidators: true,
+      }
+    );
+    if (!id) return res.status(404).json(`No task found with this ${id}`);
+    // upatating to the front end
+    res.status(200).json(task);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
@@ -59,4 +80,5 @@ module.exports = {
   gettingAllTask,
   getSingleTask,
   deleteTask,
+  updateTask,
 };
