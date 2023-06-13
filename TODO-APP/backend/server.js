@@ -1,8 +1,6 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
 const connectDB = require("./config/connectDB");
-const Task = require("./model/taskModel");
-const mongoose = require("mongoose");
 const app = express();
 const port = process.env.PORT || 3000; // localhost port
 const taskRoutes = require("./routes/taskRoute");
@@ -23,11 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(taskRoutes);
 
-// const logger = (req,res,next) => {
-//   console.log("Middlewere Run")
-//   // middlewere special funtion
-//   next()
-// }
+
 
 /**
  *  starting the server

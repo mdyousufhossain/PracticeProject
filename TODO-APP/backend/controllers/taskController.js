@@ -37,4 +37,26 @@ const getSingleTask = async (req, res) => {
   }
 };
 
-module.exports = { createTask, gettingAllTask, getSingleTask };
+// deleteting task
+const deleteTask = async (req, res) => {
+  try {
+    // destrcuting id from the database params 
+    const { id } = req.params;
+    //using mangoose method to find and delete an item
+    const task = await Task.findByIdAndDelete(id);
+    // checking if id exist
+    if (!task) return res.status(404).json(`No task found   with ${id}`);
+
+    res.status(200).send("Task has been deleted successfully");
+
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+module.exports = {
+  createTask,
+  gettingAllTask,
+  getSingleTask,
+  deleteTask,
+};
