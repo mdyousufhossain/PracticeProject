@@ -14,15 +14,15 @@ const router = express.Router()
  *  */  
 
 // creating data or sending data to the database  
-router.post("/api/tasks", createTask);
+router.post("/",createTask);
   
 // reading all data
-router.get("/api/tasks", gettingAllTask);
+router.get( "/", gettingAllTask);
 
 // reading single data
-router.get("/api/tasks/:id", getSingleTask);
-router.delete("/api/tasks/:id", deleteTask);
-router.put("/api/tasks/:id", updateTask);
+router.get("/:id", getSingleTask);
+router.delete("/:id", deleteTask);
+router.patch("/:id", updateTask);
 
 
 module.exports = router
