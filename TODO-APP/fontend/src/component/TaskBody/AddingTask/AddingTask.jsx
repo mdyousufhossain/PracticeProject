@@ -1,44 +1,33 @@
 import { useState } from "react";
+import { toast } from 'react-toastify'
+import axios, { HttpStatusCode } from 'axios'
 
 const AddingTask = () => {
-  const [items, setItem] = useState("");
-  const [inputvalue, setInputValue] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    completed: false
+  });
+
+  const { name  } = formData
 
   const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+    const { name ,value } = e.target  
+    setFormData({...formData ,[name]: value});
   };
 
-  console.log(items);
-
-  
-  const handleSendingData = () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({name : items}),
-    };
-
-    fetch("http://localhost:3000/api/tasks", requestOptions)
-      .then((response) => {
-        if (response.ok) {
-          console.log(`Successfully sent data ${items}`);
-        } else {
-          throw new Error(`Request failed with status ${response.status}`);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  const handleSubmit = () => {
-    if (inputvalue.trim() !== "") {
-      setItem(inputvalue);
-      setInputValue("")
-      handleSendingData();
+  const createTask = async (e) => {
+    e.preventDefault()
+    if(name === ""){
+      return toast.error("Input field cannot be emty")
     }
-  };
+
+    try {
+        await axios.post("http://localhost:3000/api/tasks",formData)
+        console.log("data submited", formData)
+    } catch (error) {
+        console.log(error,HttpStatusCode)
+    }
+  }
 
   return (
     <div className="w-full">
@@ -48,13 +37,14 @@ const AddingTask = () => {
             className="w-full p-6 rounded-md mr-4"
             type="text"
             placeholder="Add a Task"
-            value={inputvalue}
+            name="name"
+            value={name}
             onChange={handleInputChange}
           />
 
           <button
             className="w-28 h-12 bg-slate-400 rounded"
-            onClick={handleSubmit}
+            onClick={createTask}
           >
             Add task
           </button>
