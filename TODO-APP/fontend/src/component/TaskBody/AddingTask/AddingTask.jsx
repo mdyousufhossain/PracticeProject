@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { toast } from 'react-toastify'
-import axios, { HttpStatusCode } from 'axios'
+import axios from 'axios'
 
 const AddingTask = () => {
   const [formData, setFormData] = useState({
-    name: "",
+    name: "", 
     completed: false
   });
+
+  
 
   const { name  } = formData
 
@@ -25,7 +27,9 @@ const AddingTask = () => {
         await axios.post("http://localhost:3000/api/tasks",formData)
         console.log("data submited", formData)
     } catch (error) {
-        console.log(error,HttpStatusCode)
+
+        toast.error(error.message)
+        console.error(error)
     }
   }
 
