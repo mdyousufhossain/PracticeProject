@@ -8,7 +8,6 @@ const Navbar = () => {
         if (!expend) {
           return setExpend(true);
         }
-    
         return setExpend(false);
       };
     return (

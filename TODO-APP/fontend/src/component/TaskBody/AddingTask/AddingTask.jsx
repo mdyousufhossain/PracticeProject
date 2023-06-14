@@ -1,16 +1,43 @@
 import { useState } from "react";
 
 const AddingTask = () => {
-  const [items, setItem] = useState({});
+  const [items, setItem] = useState("");
   const [inputvalue, setInputValue] = useState("");
 
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
 
+  console.log(items);
+
+  
+  const handleSendingData = () => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({name : items}),
+    };
+
+    fetch("http://localhost:3000/api/tasks", requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          console.log(`Successfully sent data ${items}`);
+        } else {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const handleSubmit = () => {
     if (inputvalue.trim() !== "") {
-      setItem({ ...items, inputvalue });
-      console.log(items);
+      setItem(inputvalue);
+      setInputValue("")
+      handleSendingData();
     }
-    setInputValue("");
   };
 
   return (
@@ -22,7 +49,7 @@ const AddingTask = () => {
             type="text"
             placeholder="Add a Task"
             value={inputvalue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={handleInputChange}
           />
 
           <button
