@@ -1,12 +1,14 @@
-import Navbar from "./component/TaskBody/Navbar/Navbar"
-import TaskBody from "./component/TaskBody/TaskBody"
+
+import AddingTask from "./component/TaskBody/AddingTask/AddingTask"
+
+
 
 const App = () => {
   
 
   return (
     <>
-      <TaskBody />
+      <AddingTask />
     </>
   )
 }
