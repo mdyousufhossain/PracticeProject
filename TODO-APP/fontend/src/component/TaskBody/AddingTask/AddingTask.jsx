@@ -21,6 +21,7 @@ const AddingTask = () => {
 
   const { name } = formData;
 
+  // helper function
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -40,6 +41,7 @@ const AddingTask = () => {
     }
   };
 
+  // using effect to retrive data without any sideeffect
   useEffect(() => {
     getTasks();
   }, []);
@@ -49,8 +51,8 @@ const AddingTask = () => {
     e.preventDefault();
     if (name === "") {
       return toast.error("Input field cannot be emty");
-    }
-
+    } 
+    // trying to pushing item to the database
     try {
       await axios.post(`http://localhost:3000/api/tasks`, formData);
       getTasks();
@@ -61,6 +63,7 @@ const AddingTask = () => {
     }
   };
 
+  // deleteing task 
   const deleteTask = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/tasks/${id}`);
