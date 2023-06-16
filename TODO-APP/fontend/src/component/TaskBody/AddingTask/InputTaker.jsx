@@ -1,4 +1,4 @@
-const InputTaker = ({ name, handleInputChange, createTask, isEditing}) => {
+const InputTaker = ({ name, handleInputChange, createTask}) => {
   return (
     <div className="md:w-4/5 mx-auto">
       <div className="md:w-4/5 mx-auto flex items-center ">
@@ -12,7 +12,7 @@ const InputTaker = ({ name, handleInputChange, createTask, isEditing}) => {
         />
 
         <button className="w-28 h-12 bg-slate-400 rounded" onClick={createTask}>
-          {isEditing ? "Edite" : "Add"}
+          {"Add"}
         </button>
       </div>
     </div>

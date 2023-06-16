@@ -6,7 +6,6 @@ import TaskDisplay from "../TaskDisplay/TaskDisplay";
 import { typeGraphy } from "../TaskDisplay/TaskDisplay";
 import TaskMaker from "../TaskDisplay/TaskMaker";
 
-
 // ;
 
 const AddingTask = () => {
@@ -18,9 +17,9 @@ const AddingTask = () => {
   //storeing and displaying data
   const [task, setTask] = useState([]);
   const [isloading, setLoading] = useState(false);
-  // editing 
-  const [isEditing,setisEditing ] = useState(false)
-  const [TaskID , setTaskID ] = useState("")
+  // editing
+  // const [isEditing, setisEditing] = useState(false);
+  // const [TaskID, setTaskID] = useState("");
 
   const { name } = formData;
 
@@ -29,8 +28,6 @@ const AddingTask = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-
 
   // displaying data from the backend
   const getTasks = async () => {
@@ -56,7 +53,7 @@ const AddingTask = () => {
     e.preventDefault();
     if (name === "") {
       return toast.error("Input field cannot be emty");
-    } 
+    }
     // trying to pushing item to the database
     try {
       await axios.post(`http://localhost:3000/api/tasks`, formData);
@@ -68,7 +65,7 @@ const AddingTask = () => {
     }
   };
 
-  // deleteing task 
+  // deleteing task
   const deleteTask = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/api/tasks/${id}`);
@@ -78,10 +75,32 @@ const AddingTask = () => {
     }
   };
 
+  //  const handleChangeTask =  (task) => {
+  //     setTask(
+  //       task.map((t) => {
+  //         if (t.id === task.id) {
+  //           return task;
+  //         } else {
+  //           return t;
+  //         }
+  //       })
+  //     );
+  //   }
 
-  const updateTask = async ( task) => {
-     
-  }
+  const editingTask = (tasks) => {
+    
+    return task.map((id) => {
+      if (id._id === tasks) {
+        return id;
+      }
+    });
+  };
+
+
+
+
+
+  
 
   return (
     <div className="w-full">
@@ -89,7 +108,6 @@ const AddingTask = () => {
         name={name}
         handleInputChange={handleInputChange}
         createTask={createTask}
-        isEditing={isEditing}
       />
       <TaskDisplay>
         {isloading && <div> Loading ... </div>}
@@ -100,11 +118,11 @@ const AddingTask = () => {
             return (
               <TaskMaker
                 key={tasks._id}
-                task={tasks.name}
+                task={tasks}
                 index={index + 1}
                 deleteTask={deleteTask}
                 tasksid={tasks._id}
-                getSingleTask={updateTask}
+                editingTask={editingTask}
               />
             );
           })
