@@ -1,7 +1,7 @@
 import { typeGraphy, Bottom } from "./TaskDisplay";
 import { useState } from "react";
 
-const TaskMaker = ({ task, index, deleteTask, tasksid }) => {
+const TaskMaker = ({ task, index, deleteTask, tasksid, getSingleTask }) => {
   const [packed, setPacked] = useState(false);
 
   const HandleClick = () => {
@@ -30,7 +30,7 @@ const TaskMaker = ({ task, index, deleteTask, tasksid }) => {
       )}
 
       <div className="mx-4 flex justify-center items-center">
-        <button className={Bottom}>Edit</button>
+        <button className={Bottom} onClick={() => getSingleTask()}>Edit</button>
         <button className={Bottom} onClick={() => deleteTask(tasksid)}>
           Delete
         </button>

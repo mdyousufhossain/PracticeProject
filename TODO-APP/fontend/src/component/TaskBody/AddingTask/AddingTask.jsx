@@ -18,6 +18,9 @@ const AddingTask = () => {
   //storeing and displaying data
   const [task, setTask] = useState([]);
   const [isloading, setLoading] = useState(false);
+  // editing 
+  const [isEditing,setisEditing ] = useState(false)
+  const [TaskID , setTaskID ] = useState("")
 
   const { name } = formData;
 
@@ -26,6 +29,8 @@ const AddingTask = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+
 
   // displaying data from the backend
   const getTasks = async () => {
@@ -73,12 +78,18 @@ const AddingTask = () => {
     }
   };
 
+
+  const updateTask = async ( task) => {
+     
+  }
+
   return (
     <div className="w-full">
       <InputTaker
         name={name}
         handleInputChange={handleInputChange}
         createTask={createTask}
+        isEditing={isEditing}
       />
       <TaskDisplay>
         {isloading && <div> Loading ... </div>}
@@ -93,6 +104,7 @@ const AddingTask = () => {
                 index={index + 1}
                 deleteTask={deleteTask}
                 tasksid={tasks._id}
+                getSingleTask={updateTask}
               />
             );
           })
