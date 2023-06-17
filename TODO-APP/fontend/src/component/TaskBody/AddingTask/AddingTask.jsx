@@ -86,21 +86,23 @@ const AddingTask = () => {
   //       })
   //     );
   //   }
+  // first job is done i can find without 
+  const editingTask = (tasks,newData) => {
+    let index;
+    const idFinder = () => {
+      task.map((id) => {
+        if (id._id === tasks) {
+          index = id
+          return index;
+        }
+      });
+    };
 
-  const editingTask = (tasks) => {
+    idFinder()
+
+    return console.log(newData)
     
-    return task.map((id) => {
-      if (id._id === tasks) {
-        return id;
-      }
-    });
   };
-
-
-
-
-
-  
 
   return (
     <div className="w-full">

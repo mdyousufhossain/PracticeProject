@@ -6,45 +6,30 @@ import axios from "axios";
 const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
   const [packed, setPacked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [newData, setnewData] = useState({});
 
-  const { name } = task
-
-  const editingTask = (task) => {
-
-    if (isEditing) {
-      const updatedTask = {
-        ...name,
-        name: e.target.value,
-      };
+  let taskContent;
+  let taskInput;
   
-      axios.put(`/api/tasks/${taskid}`, updatedTask)
-        .then(response => {
-          // Handle successful response if needed
-          console.log("successfullyresponse",response)
-          setIsEditing(false);
-        })
-        .catch(error => {
-          console.log(error)
-        });
-    }
-  };
 
-
-  const taskContent = (
-    <>
-      <input
-        className="text-gray-700"
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
-      <button className={Bottom} onClick={() => editingTask(task._id)}>
-        Save
-      </button>
-    </>
-  );
-
+  packed
+    ? (taskContent = (
+        <del>
+          <li
+            className={`${typeGraphy} p-4 m-2 bg-slate-900 text-center text-slate-50 rounded text-2xl`}
+          >
+            {index}.{task.name} ✅
+          </li>
+        </del>
+      ))
+    : (taskContent = (
+        <li
+          className={`${typeGraphy} p-4 m-2 bg-slate-900 text-center text-slate-50 rounded text-2xl`}
+        >
+          {" "}
+          {index}.{task.name}{" "}
+        </li>
+      ));
 
   const HandleClick = () => {
     if (!packed) {
@@ -53,28 +38,55 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
     return setPacked(false);
   };
 
+  const handleupdate = () => {
+    if (!isEditing) {
+      setIsEditing(true);
+      setnewData(task)
+    }
+  };
+
+  isEditing
+    ? (taskInput = (
+        <>
+          <input
+            type="text"
+            value={newData.name}
+            onChange= { 
+              (e) => {
+                setnewData(e.target.value)
+              }
+            }
+          />
+          <button
+            className={Bottom}
+            onClick={() => {
+              editingTask(task._id,newData);
+              setIsEditing(false);
+            }}
+          >
+            Save
+          </button>
+        </>
+      ))
+    : (taskInput = (
+        <>
+          <button
+            className={Bottom}
+            onClick={handleupdate}
+          >
+            Edit
+          </button>
+        </>
+      ));
+
+  
+
   return (
     <div className="flex justify-between m-4 bg-slate-700 rounded">
-      {packed ? (
-        <del>
-          <li
-            className={`${typeGraphy} p-4 m-2 bg-slate-900 text-center text-slate-50 rounded text-2xl`}
-          >
-            {index}.{task.name} ✅
-          </li>
-        </del>
-      ) : (
-        <li
-          className={`${typeGraphy} p-4 m-2 bg-slate-900 text-center text-slate-50 rounded text-2xl`}
-        >
-          {" "}
-          {index}.{task.name}{" "}
-        </li>
-      )}
+      {taskContent}
 
       <div className="mx-4 flex justify-center items-center">
-        {taskContent}
-
+        {taskInput}
         <button className={Bottom} onClick={() => deleteTask(tasksid)}>
           Delete
         </button>
