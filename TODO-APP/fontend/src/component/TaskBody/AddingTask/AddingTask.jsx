@@ -86,22 +86,33 @@ const AddingTask = () => {
   //       })
   //     );
   //   }
-  // first job is done i can find without 
-  const editingTask = (tasks,newData) => {
+  // first job is done i can find without
+  const editingTask = async (tasks, newData) => {
     let index;
     const idFinder = () => {
       task.map((id) => {
         if (id._id === tasks) {
-          index = id
+          index = id;
           return index;
         }
       });
     };
 
-    idFinder()
+    idFinder();
 
-    return console.log(newData)
-    
+    if (newData !== "") {
+      console.log(index._id, newData);
+
+      try {
+        await axios.patch(
+          `http://localhost:3000/api/tasks/${index._id}`,
+          {name:newData,completed:false}
+        );
+        getTasks()
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
