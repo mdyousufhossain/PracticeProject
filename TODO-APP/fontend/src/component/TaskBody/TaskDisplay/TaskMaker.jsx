@@ -1,7 +1,7 @@
 import { typeGraphy, Bottom } from "./TaskDisplay";
 import { useState } from "react";
 
-import axios from "axios";
+
 
 const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
   const [packed, setPacked] = useState(false);
@@ -50,6 +50,7 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
         <>
           <input
             type="text"
+            className="p-4 text-sm  w-96"
             value={newData.name}
             onChange= { 
               (e) => {
@@ -87,7 +88,7 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
 
       <div className="mx-4 flex justify-center items-center">
         {taskInput}
-        <button className={Bottom} onClick={() => deleteTask(tasksid)}>
+        <button className={Bottom} onClick={() => deleteTask(task._id)}>
           Delete
         </button>
         <button className={Bottom} onClick={HandleClick}>

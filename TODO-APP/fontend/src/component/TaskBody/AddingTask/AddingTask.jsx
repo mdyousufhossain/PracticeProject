@@ -97,16 +97,15 @@ const AddingTask = () => {
         }
       });
     };
-
+     // assaigning data_id  to the index
     idFinder();
 
     if (newData !== "") {
       console.log(index._id, newData);
-
       try {
         await axios.patch(
           `http://localhost:3000/api/tasks/${index._id}`,
-          {name:newData,completed:false}
+          {name:newData}
         );
         getTasks()
       } catch (error) {
