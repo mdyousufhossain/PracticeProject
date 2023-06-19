@@ -114,6 +114,35 @@ const AddingTask = () => {
     }
   };
 
+
+  const handleDone = async (tasks, newData) => {
+    let index;
+    const idFinder = () => {
+      task.map((id) => {
+        if (id._id === tasks) {
+          index = id;
+          return index;
+        }
+      });
+    };
+
+    idFinder();
+
+    if (newData !== "") {
+      console.log("this is from true false ",index._id, newData);
+      try {
+        await axios.put(
+          `http://localhost:3000/api/tasks/${index._id}`,
+          {completed:newData}
+        );
+        getTasks()
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+  }
+
   return (
     <div className="w-full">
       <InputTaker
@@ -135,6 +164,7 @@ const AddingTask = () => {
                 deleteTask={deleteTask}
                 tasksid={tasks._id}
                 editingTask={editingTask}
+                isDone={handleDone}
               />
             );
           })

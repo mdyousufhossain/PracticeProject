@@ -3,7 +3,7 @@ import { useState } from "react";
 
 
 
-const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
+const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask,isDone }) => {
   const [packed, setPacked] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [newData, setnewData] = useState({});
@@ -11,6 +11,7 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
   let taskContent;
   let taskInput;
   
+  const { complited } = task
 
   packed
     ? (taskContent = (
@@ -32,10 +33,13 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask }) => {
       ));
 
   const HandleClick = () => {
-    if (!packed) {
-      return setPacked(true);
+    if (!complited) {
+       setPacked(true);
+       isDone(task._id,true)
     }
-    return setPacked(false);
+     isDone(task._id,false)
+     setPacked(false)
+     
   };
 
   const handleupdate = () => {
