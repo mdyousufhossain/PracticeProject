@@ -1,20 +1,24 @@
 import { typeGraphy, Bottom } from "./TaskDisplay";
 import { useState } from "react";
 
-
-
-const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask,isDone }) => {
-  const [packed, setPacked] = useState(false);
+const TaskMaker = ({
+  task,
+  index,
+  deleteTask,
+  tasksid,
+  editingTask,
+  isDone,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newData, setnewData] = useState({});
 
   let taskContent;
   let taskInput;
-  
-  
 
-  
-  task.completed  ? (taskContent = (
+  const { completed } = task;
+
+  completed
+    ? (taskContent = (
         <del>
           <li
             className={`${typeGraphy} p-4 m-2 bg-slate-900 text-center text-slate-50 rounded text-2xl`}
@@ -33,23 +37,18 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask,isDone }) => 
       ));
 
   const HandleClick = () => {
-    if (!task.completed) {
-       setPacked(true);
-       isDone(task._id,true)
-       console.log("this is from handleClick : ",task.completed);
+    if (!completed) {
+      isDone(task._id, true);
     }
-     if(task.completed) {
-      console.log("this is from handleClick : ", task.completed);
-      isDone(task._id,false)
-      setPacked(false)
-     }
-     
+    if (completed) {
+      isDone(task._id, false);
+    }
   };
 
   const handleupdate = () => {
     if (!isEditing) {
       setIsEditing(true);
-      setnewData(task)
+      setnewData(task);
     }
   };
 
@@ -60,16 +59,14 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask,isDone }) => 
             type="text"
             className="p-4 text-sm  w-96"
             value={newData.name}
-            onChange= { 
-              (e) => {
-                setnewData(e.target.value)
-              }
-            }
+            onChange={(e) => {
+              setnewData(e.target.value);
+            }}
           />
           <button
             className={Bottom}
             onClick={() => {
-              editingTask(task._id,newData);
+              editingTask(task._id, newData);
               setIsEditing(false);
             }}
           >
@@ -79,16 +76,11 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask,isDone }) => 
       ))
     : (taskInput = (
         <>
-          <button
-            className={Bottom}
-            onClick={handleupdate}
-          >
+          <button className={Bottom} onClick={handleupdate}>
             Edit
           </button>
         </>
       ));
-
-  
 
   return (
     <div className="flex justify-between m-4 bg-slate-700 rounded">
