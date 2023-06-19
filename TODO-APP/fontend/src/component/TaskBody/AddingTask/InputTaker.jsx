@@ -1,3 +1,4 @@
+// eslint-disable-next-line react/prop-types   
 const InputTaker = ({ name, handleInputChange, createTask}) => {
   return (
     <div className="md:w-4/5 mx-auto">

@@ -162,7 +162,7 @@ const AddingTask = () => {
                 task={tasks}
                 index={index + 1}
                 deleteTask={deleteTask}
-                tasksid={tasks._id}
+                
                 editingTask={editingTask}
                 isDone={handleDone}
               />

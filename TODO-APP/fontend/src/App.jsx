@@ -1,14 +1,11 @@
-
-import AddingTask from "./component/TaskBody/AddingTask/AddingTask"
+import TaskBody from "./component/TaskBody/TaskBody"
 
 
 
 const App = () => {
-  
-
   return (
     <>
-      <AddingTask />
+      <TaskBody />
     </>
   )
 }
