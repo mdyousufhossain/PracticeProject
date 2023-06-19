@@ -131,7 +131,7 @@ const AddingTask = () => {
     if (newData !== "") {
       console.log("this is from true false ",index._id, newData);
       try {
-        await axios.put(
+        await axios.patch(
           `http://localhost:3000/api/tasks/${index._id}`,
           {completed:newData}
         );

@@ -11,10 +11,10 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask,isDone }) => 
   let taskContent;
   let taskInput;
   
-  const { complited } = task
+  
 
-  packed
-    ? (taskContent = (
+  
+  task.completed  ? (taskContent = (
         <del>
           <li
             className={`${typeGraphy} p-4 m-2 bg-slate-900 text-center text-slate-50 rounded text-2xl`}
@@ -33,12 +33,16 @@ const TaskMaker = ({ task, index, deleteTask, tasksid, editingTask,isDone }) => 
       ));
 
   const HandleClick = () => {
-    if (!complited) {
+    if (!task.completed) {
        setPacked(true);
        isDone(task._id,true)
+       console.log("this is from handleClick : ",task.completed);
     }
-     isDone(task._id,false)
-     setPacked(false)
+     if(task.completed) {
+      console.log("this is from handleClick : ", task.completed);
+      isDone(task._id,false)
+      setPacked(false)
+     }
      
   };
 
