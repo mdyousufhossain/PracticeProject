@@ -4,14 +4,14 @@ const { createTask, getSingleTask, gettingAllTask, deleteTask, updateTask } = re
 
 const router = express.Router()
 
-
-
 /**_____
  * This section is for api endpoint routeing
  * Its CRUD applicaiton so there will be few end points
  *  
  * author : github/mdyousufhossain
- *  */  
+ *  */
+  
+/*--------------------------------- */
 
 // creating data or sending data to the database  
 router.post("/",createTask);
