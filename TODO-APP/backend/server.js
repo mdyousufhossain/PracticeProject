@@ -6,6 +6,8 @@ const port = process.env.PORT || 3000; // localhost port
 const taskRoutes = require("./routes/taskRoute");
 const userRoute = require("./routes/userRoute");
 const cors = require("cors");
+const errorHandler = require("./middleware/errorMiddleware");
+
 
 // Middleware
 
@@ -24,7 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/:users/tasks", taskRoutes);
 app.use("/api/", userRoute);
-
+app.use(errorHandler)
 
 
 /**
@@ -34,6 +36,7 @@ app.use("/api/", userRoute);
  *  connecting database before the server
  * it will help to prevent weird bugs and error
  */
+
 const startServer = async () => {
   try {
     //calling for database connection
@@ -48,4 +51,5 @@ const startServer = async () => {
 };
 
 // calling server
+
 startServer();
