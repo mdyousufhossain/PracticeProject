@@ -1,5 +1,5 @@
 const User = require("../model/userModel");
-const brcypt = require("bcryptjs")
+
 
 /**
  *
@@ -29,15 +29,15 @@ const registerUser = async (req, res) => {
     }
 
    // Encrypting password
-   const salt = await brcypt.genSalt(10)
-   // hashing password 
-   const hashedpass = await brcypt.hash(password,salt)
+  //  const salt = await brcypt.genSalt(10)
+  //  // hashing password 
+  //  const hashedpass = await brcypt.hash(password,salt)
 
 
     const user = await User.create({
       name,
       email,
-      password : hashedpass,
+      password ,
     });
     if (user) {
       const { _id, name, email, photo, bio } = user;
