@@ -18,7 +18,7 @@ const userScema = mongoose.Schema({
             type:String,
             required:[true,"add more password"],
             minLength:[6,"not enough strong"],
-            maxLength:[16,"Are you trying some nuclear password?"]
+            // maxLength:[30,"Are you trying some nuclear password?"]
         },
         photo:{
             type:String,
