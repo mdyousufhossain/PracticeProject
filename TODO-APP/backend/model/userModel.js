@@ -41,7 +41,7 @@ userScema.pre("save", async function (next) {
     return next()
 
   }
-
+  // encrypting the pass before submiting 
   const salt = await brcypt.genSalt(10);
   // hash password
   const hashedpass = await brcypt.hash(this.password, salt);
