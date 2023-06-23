@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
     }
     // check if user exist
     const userExist = await User.findOne({ email });
-
+  // cat create account if you have already acocunt
     if (userExist) {
       res.status(400);
       throw new Error("This email already been register");
@@ -39,6 +39,7 @@ const registerUser = async (req, res) => {
       email,
       password ,
     });
+    //checcing if suer exist in database
     if (user) {
       const { _id, name, email, photo, bio } = user;
       res.status(201).json({
