@@ -28,10 +28,6 @@ const registerUser = async (req, res) => {
       throw new Error("This email already been register");
     }
 
-   // Encrypting password
-  //  const salt = await brcypt.genSalt(10)
-  //  // hashing password 
-  //  const hashedpass = await brcypt.hash(password,salt)
 
 
     const user = await User.create({
