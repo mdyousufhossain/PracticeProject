@@ -46,7 +46,9 @@ const registerUser = async (req, res) => {
         bio,
       });
     }
-  } catch (error) {
+  } 
+  // error msg
+  catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
