@@ -34,7 +34,7 @@ app.use(errorHandler)
  *  connecting the MongdoDB database
  *  using default server address : http://localhost:3000
  *  connecting database before the server
- * it will help to prevent weird bugs and error
+ * 
  */
 
 const startServer = async () => {
