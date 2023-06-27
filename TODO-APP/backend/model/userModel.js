@@ -13,6 +13,7 @@ const userScema = mongoose.Schema({
     require: [true, "You must add Email"],
     unique: true,
     trim: true,
+    //email regex ref : https://stackoverflow.com/questions/46155/how-can-i-validate-an-email-address-in-javascript
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       "Please Add Valid Email",
