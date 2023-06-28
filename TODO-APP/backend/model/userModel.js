@@ -8,6 +8,7 @@ const userScema = mongoose.Schema({
     minLength: [2, "Thats not a name "],
     maxLength: [12, "Thats must be some nuclear password"],
   },
+  // validating email
   email: {
     type: String,
     require: [true, "You must add Email"],
