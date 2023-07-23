@@ -1,6 +1,7 @@
+const fs = require('fs')
+const path = require("path");
 const https = require("https");
 const expess = require("express");
-const path = require("path");
 const app = expess();
 const PORT = 8080;
 
@@ -13,7 +14,12 @@ app.get("/", (req, res) => {
 });
 
 function Server() {
-  https.createServer().listen(PORT, () => {
+  https.createServer({
+    
+    key :fs.readFileSync('key.pem'),
+    cert :fs.readFileSync('cert.pem')
+
+  }).listen(PORT, () => {
     console.log(`server started in ${PORT} `);
   });
 }
