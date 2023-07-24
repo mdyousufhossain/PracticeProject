@@ -2,26 +2,17 @@ const fs = require('fs')
 const path = require("path");
 const https = require("https");
 const expess = require("express");
+const jokeRoute =require('./backend/Route/jokeRoute')
 const app = expess();
 const PORT = 8080;
 
-app.get("/:user/dashboard", (req, res) => {
-  res.send("this is admin panel");
-});
+app.use(expess.json())
 
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+app.use(expess.urlencoded({
+  extended:false
+}))
 
-
-app.post('/:user/dashboard',(req , res) => {
-  res.send('user Created')
-})
-
-
-
-
-
+app.use("api/v1/:user",jokeRoute)
 // function Server() {
 //   https.createServer({
     
