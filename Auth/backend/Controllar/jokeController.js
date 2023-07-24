@@ -5,7 +5,12 @@
 
 // getting all item
 const GettingAllJoke = (req, res) => {
-  res.send("All joke");
+    try {
+      res.send("all data")
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+
 };
 
 // getting single item

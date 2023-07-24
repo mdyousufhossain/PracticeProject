@@ -6,13 +6,11 @@ const jokeRoute =require('./backend/Route/jokeRoute')
 const app = expess();
 const PORT = 8080;
 
-app.use(expess.json())
+app.use(expess.json());
+app.use(expess.urlencoded({ extended: false }));
 
-app.use(expess.urlencoded({
-  extended:false
-}))
+app.use("/api/:user/",jokeRoute)
 
-app.use("api/v1/:user",jokeRoute)
 // function Server() {
 //   https.createServer({
     
