@@ -1,5 +1,5 @@
 const userDB = {
-  users: require("../model/user.json"),
+  users: require('../model/user.json'),
   setUser: function (data) {
     this.users = data;
   },
@@ -17,11 +17,11 @@ const handleNewUser = async (req, res) => {
       message: "Username name Password are required",
     });
   /** checking for dupclicate */
-  const dupclicate = userDB.users.find((person) => person.username === user);
-  if (dupclicate)
-    return res.sendStatus(409).json({
-      message: "someone aleady used this username",
-    });
+  // const dupclicate = userDB.users.find((person) => person.username === user);
+  // if (dupclicate)
+  //   return res.sendStatus(409).json({
+  //     message: "someone aleady used this username",
+  //   });
 
   try {
     // encryt the password
