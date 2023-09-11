@@ -1,2 +1,5 @@
 20230908	21:34:43	d8085ad2-a6fe-415c-bfac-17ca286242ab	POST	undefined	/register
 20230908	22:00:30	9008c132-2943-43d0-a096-f46b69a8c4e1	POST	undefined	/register
+20230911	12:59:36	3b2b7c0e-4303-402f-af19-0ae83c003867	POST	undefined	/auth
+20230911	13:07:28	4360e75a-d04e-4851-9118-1b4b8e485b0c	POST	undefined	/register
+20230911	13:08:18	6f1c4ba8-69c1-4119-8047-f0c729ed0e42	POST	undefined	/auth
