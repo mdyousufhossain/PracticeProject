@@ -32,7 +32,6 @@ const userScema = mongoose.Schema({
   bio: {
     type: String,
     maxLength: [250, "Bio must not be more than 250 character"],
-    default: "a night without sleep is worse than death",
   },
 });
 

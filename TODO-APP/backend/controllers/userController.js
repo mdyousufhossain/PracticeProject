@@ -57,8 +57,21 @@ const registerUser = async (req, res) => {
   } 
   // error msg
   catch (error) {
+    console.log(error)
     res.status(500).json({ msg: error.message });
   }
 };
 
-module.exports = registerUser;
+
+
+const gettingAllUsers = async (req, res) => {
+  try {
+    // extracing data from the database
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+module.exports = { registerUser , gettingAllUsers };
