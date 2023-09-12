@@ -31,7 +31,8 @@ const userScema = mongoose.Schema({
   },
   bio: {
     type: String,
-    maxLength: [250, "Bio must not be more than 250 character"],
+
+    default: "there is a demon lurking in Ashina "
   },
 });
 

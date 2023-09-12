@@ -7,6 +7,7 @@ const taskRoutes = require("./routes/taskRoute");
 const userRoute = require("./routes/userRoute");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorMiddleware");
+const cookieParser = require('cookie-parser')
 
 
 // Middleware
@@ -23,6 +24,7 @@ const errorHandler = require("./middleware/errorMiddleware");
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/:user/tasks", taskRoutes);
 app.use("/api/users", userRoute);

@@ -1,6 +1,6 @@
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken")
-
+const bcrypt = require('bcryptjs')
 
 /**
  *
@@ -11,6 +11,8 @@ const jwt = require("jsonwebtoken")
 const generateToken = (id) => {
   return jwt.sign({id},process.env.JWT_SECRET,{expiresIn: "1d"})
 }
+
+
 
 
 const registerUser = async (req, res) => {
@@ -42,6 +44,14 @@ const registerUser = async (req, res) => {
     });
     // gen jwt token 
     const token = generateToken(user._id)
+
+    res.cookie('token',token , {
+      path: "/",
+      httpOnly:true,
+      expires: new Date(Date.now() + 1000* 86400), // 1d
+      sameSite : "none",
+      secure: true
+    })
     //checcing if suer exist in database
     if (user) {
       const { _id, name, email, photo, bio } = user;
@@ -63,6 +73,67 @@ const registerUser = async (req, res) => {
 };
 
 
+const LoginHandler = async ( req, res ) => {
+  
+  /*
+  authenticate is real pain in ass but there is some demonstrate 
+  
+  first we will destruct some information from the db 
+  then check if they exist if they do then we will check their access pass is correct if they have then we will give access 
+  thats the plan 
+  
+  */
+ 
+ try {
+   const { email , password } = req.body
+   const userExist = await User.findOne({ email })
+   
+   if(!userExist){ 
+     res.status(400);
+     throw new Error("There is no user goes by this email"); 
+    }
+    
+    const correctPwd = await bcrypt.compare(password , userExist.password )
+    
+    if(!correctPwd) {
+      res.status(400);
+      throw new Error("Thats wrong pass , how about use your brain a little bit huh ? "); 
+    }
+    
+    // generating user token id 
+    const token = generateToken(userExist._id)
+    
+    res.cookie('token',token , {
+      path: "/",
+      httpOnly:true,
+      expires: new Date(Date.now() + 1000* 86400), // 1d
+      sameSite : "none",
+      secure: true
+    })
+  /* finally checking if you are worthy of login  */
+ 
+  if(correctPwd && userExist ) {
+    const { _id, name, email, photo, bio } = userExist;
+      res.status(200).json({
+        _id,
+        name,
+        email,
+        photo,
+        bio,
+        token
+      });
+
+  }
+} 
+
+catch (error) {
+  console.log(error)
+    res.status(500).json({ msg: error.message });
+}
+
+}
+
+
 
 const gettingAllUsers = async (req, res) => {
   try {
@@ -74,4 +145,5 @@ const gettingAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { registerUser , gettingAllUsers };
+module.exports = { registerUser , gettingAllUsers , LoginHandler };
+ 
