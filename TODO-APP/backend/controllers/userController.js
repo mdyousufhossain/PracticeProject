@@ -18,7 +18,7 @@ const generateToken = (id) => {
 const registerUser = async (req, res) => {
   // new user creating
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password,bio,photo } = req.body;
 
     // validation
     if (!name || !email || !password) {
@@ -40,7 +40,9 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password ,
+      password,
+      bio,
+      photo
     });
     // gen jwt token 
     const token = generateToken(user._id)
@@ -76,8 +78,8 @@ const registerUser = async (req, res) => {
 const LoginHandler = async ( req, res ) => {
   
   /*
+
   authenticate is real pain in ass but there is some demonstrate 
-  
   first we will destruct some information from the db 
   then check if they exist if they do then we will check their access pass is correct if they have then we will give access 
   thats the plan 
@@ -134,6 +136,26 @@ catch (error) {
 }
 
 
+const LogOutHandler = async (req,res) => {
+
+  try {
+    res.cookie('token','' , {
+       path: "/",
+       httpOnly:true,
+       expires: new Date(Date.now(0)), // expeires the logout
+       sameSite : "none",
+       secure: true
+    })
+
+    return res.status(200).json({message: "logout "})
+    
+  } catch (error) {
+    
+    res.status(500).json({msg: error.message })
+  }
+}
+
+
 
 const gettingAllUsers = async (req, res) => {
   try {
@@ -145,5 +167,15 @@ const gettingAllUsers = async (req, res) => {
   }
 };
 
-module.exports = { registerUser , gettingAllUsers , LoginHandler };
+
+const gettingOneUser = async ( req , res ) => {
+
+  try {
+    res.send("why are you gay ? ")
+  } catch (error) {
+    
+  }
+}
+
+module.exports = { registerUser , gettingAllUsers , LoginHandler , LogOutHandler , gettingOneUser };
  
