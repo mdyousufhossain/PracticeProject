@@ -92,14 +92,14 @@ const LoginHandler = async (req, res) => {
     const userExist = await User.findOne({ email });
 
     if (!userExist) {
-      res.status(400);
+      res.status(403);
       throw new Error("There is no user goes by this email");
     }
 
     const correctPwd = await bcrypt.compare(password, userExist.password);
 
     if (!correctPwd) {
-      res.status(400);
+      res.status(401);
       throw new Error(
         "Wrong pass ,Apply correct one please"
       );
