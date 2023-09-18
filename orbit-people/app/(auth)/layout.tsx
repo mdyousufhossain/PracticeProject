@@ -1,6 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs"
 import { Inter } from 'next/font/google'
-import '../global.css'
+import '../globals.css'
 export const metadata = {
     title: 'Khido people',
     description: ' a journey to the planet and its orbit'
@@ -13,12 +13,13 @@ export default function RootLayout(
 
     return (
         <ClerkProvider>
-            <html lang="eng">
-                <body className={`${inter.className}, bg-dark-1`}>
+            <html lang="en" >
+                <body className={`${inter.className} bg-dark-1`}>
                     {children}
                 </body>
             </html>
-        </ClerkProvider >
+        </ClerkProvider>
+        
     )
 
 }
