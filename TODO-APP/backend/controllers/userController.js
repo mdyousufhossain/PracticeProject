@@ -8,68 +8,7 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 };
 
-const registerUser = async (req, res) => {
-  // new user creating
-  try {
 
-    const { name, email, password, bio, photo } = req.body;
-
-    const userExist = await User.findOne({ email });
-    // check if user exist 
-    if (userExist) {
-      res.status(400);
-      throw new Error("This email already been register");
-    }
-    // validation
-    if (!name || !email || !password) {
-      res.status(400);
-      throw new Error("Please fill in all required fields");
-    }
-    if (password.length < 6) {
-      throw new Error("At least 6 character is needed");
-    }
-    
-    /*
-    creating the account required filled are also validated in database schema 
-
-    name , email , password are required and bio and photo are the optional 
-    
-    */
-    const user = await User.create({
-      name,
-      email,
-      password,
-      bio,
-      photo,
-    });
-    // gen jwt token
-    const token = generateToken(user._id);
-
-    res.cookie("token", token, {
-      path: "/",
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 86400), // 1d
-      sameSite: "none",
-      secure: true,
-    });
-    //checcing if suer exist in database
-    if (user) {
-      const { _id, name, email, photo, bio } = user;
-      res.status(201).json({
-        _id,
-        name,
-        email,
-        photo,
-        bio,
-        token,
-      });
-    }
-  } catch (error) {
-    // error msg
-    console.log(error);
-    res.status(500).json({ msg: error.message });
-  }
-};
 
 
 /*
@@ -84,27 +23,26 @@ const registerUser = async (req, res) => {
 */
 
 const LoginHandler = async (req, res) => {
-  
+
+  const { email, password } = req.body;
+
+  const findUser = await User.findOne({ email });
+
+  if (!findUser) {
+    res.status(401); // unauthorized
+
+    throw new Error("There is no user goes by this email");
+  } 
+
+  const match = await bcrypt.compare(password, findUser.password);
+
+    if (match) {
+      const roles = Object.values(findUser.roles).filter(Boolean);
+    
+    }
+
 
   try {
-
-    const { email, password } = req.body;
-    const userExist = await User.findOne({ email });
-
-    if (!userExist) {
-      res.status(403);
-      throw new Error("There is no user goes by this email");
-    }
-
-    const correctPwd = await bcrypt.compare(password, userExist.password);
-
-    if (!correctPwd) {
-      res.status(401);
-      throw new Error(
-        "Wrong pass ,Apply correct one please"
-      );
-    }
-
     // generating user token id
     const token = generateToken(userExist._id);
 

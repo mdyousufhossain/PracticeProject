@@ -29,27 +29,31 @@ const userScema = mongoose.Schema({
   photo: {
     type: String,
   },
-  bio: {
-    type: String,
-
-    default: "there is a demon lurking in Ashina "
-  },
+  roles: {
+    User: {
+        type: Number,
+        default: 2001
+    },
+    Editor: Number,
+    Admin: Number
+},
+refreshToken: String
 });
 
 // encrypeting the pawssword before we saving db
 
-userScema.pre("save", async function (next) {
-  if(!this.isModified("password")){
-    return next()
+// userScema.pre("save", async function (next) {
+//   if(!this.isModified("password")){
+//     return next()
 
-  }
-  // encrypting the pass before submiting 
-  const salt = await brcypt.genSalt(10);
-  // hash password
-  const hashedpass = await brcypt.hash(this.password, salt);
-  this.password = hashedpass;
-  next()
-});
+//   }
+//   // encrypting the pass before submiting 
+//   const salt = await brcypt.genSalt(10);
+//   // hash password
+//   const hashedpass = await brcypt.hash(this.password, salt);
+//   this.password = hashedpass;
+//   next()
+// });
 
 const User = mongoose.model("user", userScema);
 

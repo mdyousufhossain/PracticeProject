@@ -2,6 +2,7 @@ const Task = require("../model/taskModel");
 
 // create item in the database
 const createTask = async (req, res) => {
+  
   try {
     // creating task in database
     const task = await Task.create(req.body);
@@ -17,6 +18,11 @@ const gettingAllTask = async (req, res) => {
     // extracing data from the database
     const tasks = await Task.find();
     res.status(200).json(tasks);
+
+    if (!tasks)
+      return res.status(204).json({
+        message: " No task found",
+      });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
