@@ -27,12 +27,12 @@ const registerNewUser = async (req, res) => {
       name , email , password are required and bio and photo are the optional 
       */
 
-    const hashedPwd = await bcrypt.hash(password, 10);
+    // const hashedPwd = await bcrypt.hash(password, 10);
 
     const user = await User.create({
       name,
       email,
-      hashedPwd,
+      password,
       photo,
     });
     // gen jwt token
@@ -40,12 +40,8 @@ const registerNewUser = async (req, res) => {
     //checcing if suer exist in database
 
     res.status(201).json({
-      _id,
       name,
       email,
-      photo,
-      bio,
-      token,
     });
 
   } catch (error) {

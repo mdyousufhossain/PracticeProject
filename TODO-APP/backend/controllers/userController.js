@@ -1,108 +1,67 @@
-const User = require("../model/userModel");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const Users = require("../model/userModel");
 
 
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1d" });
-};
-
-
-
-
-/*
-******
-
-  authenticate is real pain in ass but there is some demonstrate 
-  first we will destruct some information from the db 
-  then check if they exist if they do then we will check their access pass is correct if they have then we will give access 
-  thats the plan
-
-****** 
-*/
-
-const LoginHandler = async (req, res) => {
-
-  const { email, password } = req.body;
-
-  const findUser = await User.findOne({ email });
-
-  if (!findUser) {
-    res.status(401); // unauthorized
-
-    throw new Error("There is no user goes by this email");
-  } 
-
-  const match = await bcrypt.compare(password, findUser.password);
-
-    if (match) {
-      const roles = Object.values(findUser.roles).filter(Boolean);
-    
-    }
-
-
-  try {
-    // generating user token id
-    const token = generateToken(userExist._id);
-
-    res.cookie("token", token, {
-      path: "/",
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 86400), // 1d
-      sameSite: "none",
-      secure: true,
-    });
-    /* finally checking if you are worthy of login  */
-
-    if (correctPwd && userExist) {
-      const { _id, name, email, photo, bio } = userExist;
-      res.status(200).json({
-        _id,
-        name,
-        email,
-        photo,
-        bio,
-        token,
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ msg: error.message });
-  }
-};
-
-const LogOutHandler = async (req, res) => {
-  try {
-    res.cookie("token", "", {
-      path: "/",
-      httpOnly: true,
-      expires: new Date(Date.now(0)), // expeires the logout
-      sameSite: "none",
-      secure: true,
-    });
-
-    return res.status(200).json({ message: "logout " });
-  } catch (error) {
-    res.status(500).json({ msg: error.message });
-  }
-};
 
 const gettingAllUsers = async (req, res) => {
   try {
-    // extracing data from the database
-    const users = await User.find();
-    res.status(200).json(users);
+    const UserList = await Users.find();
+
+    if (!UserList)
+      return res.status(204).json({
+        message: "No User found",
+      });
+
+    res.json(UserList);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
+
+
+
+const deleteUser = async (req, res) => {
+  try {
+    // destrcuting id from the database params
+    const { id } = req.params;
+    //using mangoose method to find and delete an item
+    const user = await Users.findByIdAndDelete(id);
+    // checking if id exist
+    if (!user) return res.status(404).json(`No task found   with ${id}`);
+
+    res.status(200).send("Task has been deleted successfully");
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // updateing item in database
+    const user = await Users.findByIdAndUpdate(
+      { _id: id }, // verifying the id
+      req.body, // updating the body
+      {
+        new: true, // new item will be accepted
+        runValidators: true,
+      }
+    );
+    if (!id) return res.status(404).json(`No task found with this ${id}`);
+    // upatating to the front end
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+};
+
 
 
 
 const gettingOneUser = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await Users.findById(req.user._id);
 
     if (user) {
       const { _id, name, email, photo, bio } = user;
@@ -115,15 +74,14 @@ const gettingOneUser = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error,"user not found");
+    console.log(error, "user not found");
     res.status(401).json({ msg: error.message });
   }
 };
 
 module.exports = {
-  registerUser,
   gettingAllUsers,
-  LoginHandler,
-  LogOutHandler,
   gettingOneUser,
+  deleteUser,
+  updateUser
 };

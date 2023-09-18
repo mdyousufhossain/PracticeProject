@@ -40,20 +40,20 @@ const userScema = mongoose.Schema({
 refreshToken: String
 });
 
-// encrypeting the pawssword before we saving db
+//encrypeting the pawssword before we saving db
 
-// userScema.pre("save", async function (next) {
-//   if(!this.isModified("password")){
-//     return next()
+userScema.pre("save", async function (next) {
+  if(!this.isModified("password")){
+    return next()
 
-//   }
-//   // encrypting the pass before submiting 
-//   const salt = await brcypt.genSalt(10);
-//   // hash password
-//   const hashedpass = await brcypt.hash(this.password, salt);
-//   this.password = hashedpass;
-//   next()
-// });
+  }
+  // encrypting the pass before submiting 
+  const salt = await brcypt.genSalt(10);
+  // hash password
+  const hashedpass = await brcypt.hash(this.password, salt);
+  this.password = hashedpass;
+  next()
+});
 
 const User = mongoose.model("user", userScema);
 

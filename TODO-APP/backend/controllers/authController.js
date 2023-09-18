@@ -2,6 +2,20 @@ const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+
+/*
+******
+
+  authenticate is real pain in ass but there is some demonstrate 
+  first we will destruct some information from the db 
+  then check if they exist if they do then we will check their access pass is correct if they have then we will give access 
+  thats the plan
+
+****** 
+*/
+
+
+
 const LoginHandler = async (req, res) => {
   const { email, password } = req.body;
 
@@ -52,9 +66,7 @@ const LoginHandler = async (req, res) => {
 
     // sending authorization roles and access token to user 
     res.json({
-      _id,
       email,
-      photo,
       roles,
       accessToken,
     });
