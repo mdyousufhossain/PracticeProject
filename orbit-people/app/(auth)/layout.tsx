@@ -1,6 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs"
 import { Inter } from 'next/font/google'
 import '../globals.css'
+
 export const metadata = {
     title: 'Khido people',
     description: ' a journey to the planet and its orbit'
