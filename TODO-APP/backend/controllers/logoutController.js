@@ -18,7 +18,8 @@ const LogOutHandler = async (req, res) => {
     if(!foundUser) {
         res.clearCookie('jwt', {
             httpOnly:true , sameSite:'None',
-            secure:true })
+           // secure:true 
+        })
         return res.sendStatus(204)
     }
 
@@ -29,7 +30,7 @@ const LogOutHandler = async (req, res) => {
     const result =  await foundUser.save();
     console.log(result)
 
-    res.clearCookie('jwt' , { httpOnly:true , sameSite: 'None' , secure: true})
+    res.clearCookie('jwt' , { httpOnly:true , sameSite: 'None' ,  }) // secure: true
 
   };
 

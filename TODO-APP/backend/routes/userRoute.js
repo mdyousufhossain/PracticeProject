@@ -10,8 +10,7 @@ const LoginHandler = require("../controllers/authController");
 const { LogOutHandler } = require("../controllers/logoutController");
 const registerNewUser = require("../controllers/registerController");
 
-
-
+const { handleRefreshToken } = require("../controllers/refreshTokenController");
 
 const router = express.Router();
 // new user regirster route
@@ -20,5 +19,6 @@ router.post("/login", LoginHandler);
 router.get("/logout", LogOutHandler);
 router.get("/name", authCheker, gettingOneUser);
 router.get("/", gettingAllUsers);
+router.get("/refreash", handleRefreshToken);
 
 module.exports = router;

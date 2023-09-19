@@ -35,18 +35,17 @@ const LoginHandler = async (req, res) => {
     const accessToken = jwt.sign(
       {
         userInfo: {
-          email: findUser.email,
-          roles: roles,
+          "email": findUser.email,
+          "roles": roles,
         },
       },
-
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "5m" }
     );
 
     // saving the refreashtoken in database
     const refreshToken = jwt.sign(
-      { email: findUser.email },
+      { "email": findUser.email },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "1d" }
     );
@@ -59,7 +58,7 @@ const LoginHandler = async (req, res) => {
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      secure: true,
+      //secure: true,
       sameSite: "None",
       maxAge: 24 * 60 * 1000,
     });

@@ -1,8 +1,9 @@
+const { Admin } = require("../config/roles_list");
 const User = require("../model/userModel");
 const bcrypt = require("bcryptjs");
 
 const registerNewUser = async (req, res) => {
-  const { name, email, password, photo } = req.body;
+  const { name, email, password, photo,roles } = req.body;
 
   const user = await User.findOne({ email });
   // duplicate user
@@ -19,29 +20,23 @@ const registerNewUser = async (req, res) => {
     throw new Error("At least 6 character is needed");
   }
 
+
+
   // new user creating
   try {
-    /*
-      creating the account required filled are also validated in database schema 
-  
-      name , email , password are required and bio and photo are the optional 
-      */
-
-    // const hashedPwd = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      name,
-      email,
-      password,
-      photo,
+      "name":name,
+      "email":email,
+      "password":password,
+      "photo":photo,
+      "roles":roles
     });
-    // gen jwt token
-
-    //checcing if suer exist in database
 
     res.status(201).json({
       name,
       email,
+      roles
     });
 
   } catch (error) {
