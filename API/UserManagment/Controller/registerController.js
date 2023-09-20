@@ -7,7 +7,7 @@ const register = async (req, res) => {
   const { name, email, password, roles } = req.body;
 
   // checking if there is duplicate
-  const User = await Userdb.find({ email }).exec();
+  const User = await Userdb.findOne({ email });
   if (User) {
     res.status(409); // conflic
     throw new Error("This email already in use");
@@ -24,10 +24,10 @@ const register = async (req, res) => {
     const hashed = await bcrypt.hash(password, 10);
     // creating user 
     const result = await Userdb.create({
-      name: name,
-      email: email,
-      password: hashed,
-      roles: roles,
+      "name": name,
+      "email": email,
+      "password": hashed,
+      "roles": roles
     });
 
     console.log(result);

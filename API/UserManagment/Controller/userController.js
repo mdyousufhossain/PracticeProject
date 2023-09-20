@@ -1,8 +1,9 @@
 const Userdb = require("../Model/UserModel");
 
+
+
 const getAlluser = async (req, res) => {
   try {
-    
     const UserList = await Userdb.find();
     if (!UserList) return res.status(204).json({ message: "No User found" });
 
@@ -12,8 +13,6 @@ const getAlluser = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
-    getAlluser
-}
+  getAlluser,
+};
