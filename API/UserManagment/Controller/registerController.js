@@ -30,6 +30,8 @@ const register = async (req, res) => {
       "roles": roles
     });
 
+
+    
     console.log(result);
     res.status(201).json({ success: `New user ${name} ${email} created!` });
   } catch (error) {
