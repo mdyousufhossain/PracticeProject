@@ -18,7 +18,7 @@ const userScemadb = {
     type: Number,
     default: 2021,
   },
-  accessToken: {
+  refreshToken: {
     type: String,
   },
 };
