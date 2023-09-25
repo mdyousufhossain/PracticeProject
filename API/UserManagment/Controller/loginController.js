@@ -23,11 +23,7 @@ const loginHandler = async (req, res) => {
   if (match) {
     // access token for 15min 
     const accessToken = jwt.sign(
-      { 
-
-        "email": duplicate.email
-
-      },
+      { "email": duplicate.email },
       process.env.ACCESS_TOKEN_SECRET_1,
       { expiresIn: "15m" }
     );
@@ -46,7 +42,7 @@ const loginHandler = async (req, res) => {
       httpOnly: true,
       sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000,
-    }); // secure : true
+    }); // secure : true **must add in prod**
 
     res.json({
       email,

@@ -1,5 +1,6 @@
 const Userdb = require("../Model/UserModel");
 
+
 const getAlluser = async (req, res) => {
   try {
     const UserList = await Userdb.find();
@@ -54,27 +55,53 @@ const getSingleUserAndDelete = async (req, res) => {
   }
 };
 
+
+/*
+  Roles : Auhtor 
+ * 
+ */
+
+
 const getSingleUserAndUpdate = async (req, res) => {
   try {
+
     const { id } = req.params;
+    // Find the user by ID
+    const user = await Userdb.findById(id);
 
-    const User = await Userdb.findByIdAndUpdate(
-      { _id: id }, // verifying the id
-      req.body, // updating the body
-      {
-        new: true, // new item will be accepted
-        runValidators: true,
-      }
-    );
+    if (!user) {
+      return res.status(404).json({ message: `No User was found : ${id}` });
+    }
 
-    if (!User) return res.status(404).json({ message: `No User was found : ${id}` });
+    // Check if the request body contains a "name" field
+    if (!req.body.name) {
+      return res.status(400).json({ message: 'Name field is required for update' });
+    }
 
-    res.status(200).json(User);
+    // Check if the request body contains "email" or "password"
+    if (req.body.email || req.body.password) {
+      /* 
+
+       If authentication fails, return a 401 status code.
+       If authentication succeeds, proceed with the update.
+
+      */
+      return res.status(401).json({ message: 'Authentication required for email and password updates' });
+    }
+
+    // Update only the "name" field
+    user.name = req.body.name;
+
+    // Save the updated user
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
     console.log(`User Updated ${id}`);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
+
 
 
 
