@@ -1,6 +1,7 @@
 const Userdb = require("../Model/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const generateTokensAndSetCookies = require('../config/tokengenerator') 
 require('dotenv').config();
 
 const loginHandler = async (req, res) => {
@@ -21,33 +22,13 @@ const loginHandler = async (req, res) => {
   const match = await bcrypt.compare(password,duplicate.password);
 
   if (match) {
-    // access token for 15min 
-    const accessToken = jwt.sign(
-      { "email": duplicate.email },
-      process.env.ACCESS_TOKEN_SECRET_1,
-      { expiresIn: "15m" }
-    );
 
-    const refreshToken = jwt.sign(
-      { "email": duplicate.email },
-      process.env.REFRESH_TOKEN_SECRET_2,
-      { expiresIn: "1d" }
-    );
-
-    duplicate.refreshToken = refreshToken;
-    const result = await duplicate.save();
-    console.log(result)
-    // saving cookie in only httpl cookie
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      sameSite: "None",
-      maxAge: 24 * 60 * 60 * 1000,
-    }); // secure : true **must add in prod**
+    const token = await generateTokensAndSetCookies(res,email,duplicate)
 
     res.json({
       email,
-      refreshToken,
-      success: `User logged in ${email} ${password}`,
+      token,
+      success: `User logged in ${email} ${password} ${token}`,
     });
     console.log("user logged in:", email);
   } else {

@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookie = require('cookie-parser')
 
+const generateTokensAndSetCookies = require('../config/tokengenerator')
+
 
 
 const register = async (req, res) => {
@@ -32,34 +34,11 @@ const register = async (req, res) => {
     });
 
     console.log(newUser);
-
-    // Create and set cookies
-    const accessToken = jwt.sign(
-      { email },
-      process.env.ACCESS_TOKEN_SECRET_1,
-      { expiresIn: "15m" }
-    );
-
-    const refreshToken1 = jwt.sign(
-      { email },
-      process.env.REFRESH_TOKEN_SECRET_2,
-      { expiresIn: "1d" }
-    );
-
-    console.log("user data stored in cookies:", newUser);
-
-    // Set cookies in the response
-    res.cookie("jwt", accessToken, {
-      httpOnly: true,
-      sameSite: "None",
-      maxAge: 24 * 60 * 60 * 1000,
-      // secure: true, // Uncomment this line if you are using HTTPS
-    });
-    
-    Userdb.refreshToken = refreshToken1
-
+    const user = await Userdb.findOne({ email });
+    // generating cookies with the function 
+    const token = await generateTokensAndSetCookies(res,email,user)
     // Send the success response
-    res.status(201).json({ success: `New user ${name} ${email} ${refreshToken}created!` });
+    res.status(201).json({ success: `New user ${name} ${email} ${token}created!` });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
