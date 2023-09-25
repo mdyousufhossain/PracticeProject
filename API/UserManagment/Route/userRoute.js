@@ -1,5 +1,5 @@
 const  register  = require('../Controller/registerController')
-const { getAlluser } = require('../Controller/userController')
+const { getAlluser , getSingleUser } = require('../Controller/userController')
 const loginHandler = require('../Controller/loginController')
 require('dotenv').config();
 
@@ -9,7 +9,8 @@ const router = express.Router()
 
 
 router.post('/register', register)
-router.get('/', getAlluser)
+router.get('/alluser', getAlluser)
+router.get('/:id', getSingleUser )
 router.post('/login', loginHandler)
 
 module.exports = router

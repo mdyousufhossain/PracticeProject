@@ -1,7 +1,7 @@
 const Userdb = require("../Model/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require("dotenv").config()
+require('dotenv').config();
 
 const loginHandler = async (req, res) => {
   const { email, password } = req.body;
@@ -12,12 +12,13 @@ const loginHandler = async (req, res) => {
       .json({ message: "Please Add email or password" });
 
   const duplicate = await Userdb.findOne({ email });
+
   if (!duplicate)
     return res
       .sendStatus(401)
       .json({ message: "No register account Please create an account " });
   // comparing password  
-  const match = await bcrypt.compare(password, duplicate.password);
+  const match = await bcrypt.compare(password,duplicate.password);
 
   if (match) {
     // access token for 15min 
@@ -27,12 +28,13 @@ const loginHandler = async (req, res) => {
         "email": duplicate.email
 
       },
-      process.env.ACCESS_TOKEN_SECRET,
+      process.env.ACCESS_TOKEN_SECRET_1,
       { expiresIn: "15m" }
     );
+
     const refreshToken = jwt.sign(
       { "email": duplicate.email },
-      process.env.REFRESH_TOKEN_SECRET,
+      process.env.REFRESH_TOKEN_SECRET_2,
       { expiresIn: "1d" }
     );
 
@@ -45,17 +47,18 @@ const loginHandler = async (req, res) => {
       sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000,
     }); // secure : true
-    res.json({ success: `User logged in ${email} ${password}` });
-    console.log("user loggen in :", email );
 
     res.json({
-        email,
-        refreshToken,
-        success: `User logged in ${email} ${password}` 
-    })
+      email,
+      refreshToken,
+      success: `User logged in ${email} ${password}`,
+    });
+    console.log("user logged in:", email);
   } else {
+    
     res.sendStatus(401);
   }
 };
+
 
 module.exports = loginHandler;
