@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userScemadb = {
+const userScemadb = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -15,13 +15,17 @@ const userScemadb = {
     required: true,
   },
   roles: {
-    type: Number,
-    default: 2021,
+    User: {
+      type: Number,
+      default: 2001,
+    },
+    Editor: Number,
+    Admin: Number,
   },
   refreshToken: {
     type: String,
   },
-};
+});
 
 const ScemaUser = mongoose.model("user1", userScemadb);
 

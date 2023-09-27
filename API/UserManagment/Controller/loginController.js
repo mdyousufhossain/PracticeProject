@@ -28,7 +28,7 @@ const loginHandler = async (req, res) => {
     res.json({
       email,
       token,
-      success: `User logged in ${email} ${password} ${token}`,
+      success: `User logged in ${email} ${password}`,
     });
     console.log("user logged in:", email);
   } else {

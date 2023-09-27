@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model for the user who created the product
+    ref: 'user1', // Reference to the User model for the user who created the product
     required: true,
   },
   // You can add more fields as needed for your specific project

@@ -8,8 +8,8 @@ const generateTokensAndSetCookies = require('../config/tokengenerator')
 
 
 
-const register = async (req, res) => {
-  const { name, email, password, roles , refreshToken  } = req.body;
+const handleRegister = async (req, res) => {
+  const { name, email, password, roles  } = req.body;
 
   try {
     // Checking if there is a duplicate user
@@ -48,4 +48,4 @@ const register = async (req, res) => {
 
 
 
-module.exports = register
+module.exports = handleRegister
