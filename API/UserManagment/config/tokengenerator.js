@@ -23,7 +23,7 @@ const jwt = require("jsonwebtoken");
       const result = await user.save();
       console.log(result);
   
-      // Set cookies in the response
+      // Set cookies in the response ___
       res.cookie("jwt", refreshToken, {
         httpOnly: true,
         sameSite: "None",

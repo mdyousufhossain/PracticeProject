@@ -29,6 +29,12 @@ const LoginHandler = async (req, res) => {
 
   const match = await bcrypt.compare(password, findUser.password);
 
+  if(!match) {
+    res.status(401); // unauthorized
+
+    throw new Error("Wrong pass you fool");
+  }
+
   if (match) {
     const roles = Object.values(findUser.roles).filter(Boolean);
     // using jwt 

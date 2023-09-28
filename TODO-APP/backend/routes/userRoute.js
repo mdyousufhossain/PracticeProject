@@ -19,6 +19,6 @@ router.post("/login", LoginHandler);
 router.get("/logout", LogOutHandler);
 router.get("/name", authCheker, gettingOneUser);
 router.get("/", gettingAllUsers);
-router.get("/refreash", handleRefreshToken);
+router.get("/refresh", handleRefreshToken);
 
 module.exports = router;
