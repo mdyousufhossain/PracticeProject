@@ -1,5 +1,4 @@
 // dependies
-
 const express  = require('express')
 const connectDB = require('./config/dbConfig')
 require('dotenv').config();
@@ -7,12 +6,14 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const corsOptions = require('./config/corsOptions')
 
+
 //routes
 const userRoute = require('./Route/api/userRoute')
 const refresh = require('./Route/refresh')
 const registerRoute = require('./Route/registerRoute')
 const logoutRoute = require('./Route/logoutRoute')
 const loginRoute = require('./Route/loginRoute')
+
 
 //middleware 
 const verifyJWT = require('./Middleware/verifyJWT')
@@ -22,10 +23,12 @@ const credentials = require('./Middleware/credentials')
 const app =  express()
 const PORT = 5050 
 
-app.use(credentials)
-// middleware
 
-app.use(cors(corsOptions));
+
+// app.use(credentials)
+// middleware
+app.use(credentials)
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,17 +36,14 @@ app.use(cookieParser());
 
 
 // register
-app.use('/api/v1/', registerRoute )
+app.use('/api/v1/', registerRoute)
 // login 
-app.use('/api/v1/', loginRoute )
+app.use('/api/v1/', loginRoute)
 // refresh token 
-app.use('/api/v1/' , refresh )
+app.use('/api/v1/' , refresh)
 // logout 
-app.use('/api/v1/' , logoutRoute )
+app.use('/api/v1/' , logoutRoute)
 //api
-
-//
-app.use(verifyJWT)
 app.use('/api/v1/', userRoute )
 
 

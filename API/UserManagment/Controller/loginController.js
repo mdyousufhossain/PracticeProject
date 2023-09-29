@@ -22,17 +22,45 @@ const loginHandler = async (req, res) => {
   const match = await bcrypt.compare(password,duplicate.password);
 
   if (match) {
+    const roles = Object.values(duplicate.roles).filter(Boolean);
 
-    const token = await generateTokensAndSetCookies(res,email,duplicate)
+    console.log(roles)
+    const accessToken = jwt.sign(
+      {
+            "email": duplicate.email,
+            "roles": roles
+    },
+      process.env.ACCESS_TOKEN_SECRET_1,
+      { expiresIn: "15m" }
+    );
+
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+      { email },
+      process.env.REFRESH_TOKEN_SECRET_2,
+      { expiresIn: "1d" }
+    );
+
+    // Save the refresh token in the database (assuming "duplicate" is the user)
+    duplicate.refreshToken = refreshToken;
+    const result = await duplicate.save();
+    console.log(result);
+
+    // Set cookies in the response ___
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      //sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000,
+      // secure: true, // Uncomment this line if you are using HTTPS in production
+    });
 
     res.json({
       email,
-      token,
+      accessToken,
       success: `User logged in ${email} ${password}`,
     });
     console.log("user logged in:", email);
-  } else {
-    
+  } else {  
     res.sendStatus(401);
   }
 };

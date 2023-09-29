@@ -1,20 +1,23 @@
 const jwt = require('jsonwebtoken');
 
 const verifyJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization || req.headers.Authorization;
-    if (!authHeader?.startsWith('Bearer ')) return res.sendStatus(401);
-    const token = authHeader.split(' ')[1];
-    console.log(token)
-    jwt.verify(
-        token,
-        process.env.ACCESS_TOKEN_SECRET_1,
-        (err, decoded) => {
-            if (err) return res.sendStatus(403); //invalid token
-            req.user = decoded.UserInfo.username;
-            req.roles = decoded.UserInfo.roles;
-            next();
-        }
-    );
-}
+    const token = req.headers.authorization || req.headers.Authorization;
 
-module.exports = verifyJWT
+    if (!token?.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    jwt.verify(token.split(' ')[1], process.env.ACCESS_TOKEN_SECRET_1, (err, decoded) => {
+        if (err) {
+            console.error('Error verifying token:', err , decoded);
+            return res.status(403).json({ error: 'Invalid token' });
+        }
+
+        // Token is valid, set user information in the request object
+        req.user = decoded.email;
+        req.roles = decoded.roles;
+        next();
+    });
+};
+
+module.exports = verifyJWT;
