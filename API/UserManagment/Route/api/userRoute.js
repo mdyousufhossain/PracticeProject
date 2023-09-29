@@ -14,10 +14,10 @@ const express = require("express");
 const router = express.Router();
 
 router
-  .get("/alluser", verifyJWT, getAlluser)
-  .get("/:id", getSingleUser)
-  .delete("/:id" , getSingleUserAndDelete)
-  .put('/:id', getSingleUserAndUpdate)
+  .get("/alluser", verifyRoles(ROLES_LIST.Admin), getAlluser)
+  .get("/:id",verifyRoles(ROLES_LIST.User) , getSingleUser)
+  .delete("/:id", verifyRoles(ROLES_LIST.Admin), getSingleUserAndDelete)
+  .put('/:id', verifyRoles(ROLES_LIST.User), getSingleUserAndUpdate)
 
 
 module.exports = router;

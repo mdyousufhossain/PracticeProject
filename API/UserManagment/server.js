@@ -44,6 +44,8 @@ app.use('/api/v1/' , refresh)
 // logout 
 app.use('/api/v1/' , logoutRoute)
 //api
+
+app.use(verifyJWT)
 app.use('/api/v1/', userRoute )
 
 
