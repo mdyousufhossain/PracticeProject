@@ -1,7 +1,7 @@
 const Userdb = require("../Model/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const generateTokensAndSetCookies = require('../config/tokengenerator') 
+//const generateTokensAndSetCookies = require('../config/tokengenerator') 
 require('dotenv').config();
 
 const loginHandler = async (req, res) => {
@@ -18,10 +18,22 @@ const loginHandler = async (req, res) => {
     return res
       .sendStatus(401)
       .json({ message: "No register account Please create an account " });
+  
+  if (duplicate.accountLockedUntil && duplicate.accountLockedUntil > new Date()) {
+        return res.status(401).json({
+          message: 'Account locked. Too many failed login attempts. Try again later.',
+        });
+  }
+
   // comparing password  
   const match = await bcrypt.compare(password,duplicate.password);
 
   if (match) {
+    // Reset login attempts upon successful login
+    duplicate.loginAttempts = 0;
+    duplicate.accountLockedUntil = null; // Reset account lockout
+    await duplicate.save();
+
     const roles = Object.values(duplicate.roles).filter(Boolean);
 
     console.log(roles)
@@ -60,8 +72,23 @@ const loginHandler = async (req, res) => {
       success: `User logged in ${email} ${password}`,
     });
     console.log("user logged in:", email);
-  } else {  
-    res.sendStatus(401);
+  } else {
+    // Increment login attempts on each failed attempt
+    duplicate.loginAttempts++;
+    await duplicate.save();
+
+    if (duplicate.loginAttempts >= 3) {
+      // Lock the account for 15 minutes
+      duplicate.accountLockedUntil = new Date(Date.now() + 1 * 60 * 1000); // should be at least 15 in prod 
+      await duplicate.save();
+
+      return res.status(401).json({
+        message: 'Account locked. Too many failed login attempts. Try again later.',
+      });
+    }
+
+    // Handle unsuccessful login attempts
+    return res.sendStatus(401);
   }
 };
 

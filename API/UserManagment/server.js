@@ -5,6 +5,8 @@ require('dotenv').config();
 const cors = require('cors')
 const cookieParser = require('cookie-parser');
 const corsOptions = require('./config/corsOptions')
+const logger = require('./Middleware/logger')
+const errorHandler = require('./Middleware/errorHandle')
 
 
 //routes
@@ -45,10 +47,11 @@ app.use('/api/v1/' , refresh)
 app.use('/api/v1/' , logoutRoute)
 //api
 
-app.use(verifyJWT)
+app.use(verifyJWT) // authentication 
 app.use('/api/v1/', userRoute )
 
-
+// error handler 
+app.use(errorHandler)
 
 const startServer = async () => {
     try {
