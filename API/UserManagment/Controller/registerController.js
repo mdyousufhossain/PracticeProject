@@ -3,10 +3,12 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookie = require("cookie-parser");
 
-const generateTokensAndSetCookies = require("../config/tokengenerator");
+
+
 
 const handleRegister = async (req, res) => {
   const { name, email, password } = req.body;
+
 
   try {
     // Checking if there is a user user
@@ -31,10 +33,10 @@ const handleRegister = async (req, res) => {
       password: hashed,
     });
 
-    console.log(newUser);
     const user = await Userdb.findOne({ email });
     // generating cookies with the function
     const roles = Object.values(user.roles).filter(Boolean);
+
     const accessToken = jwt.sign(
       {
         email: user.email,
@@ -46,7 +48,7 @@ const handleRegister = async (req, res) => {
 
     // Generate refresh token
     const refreshToken = jwt.sign(
-      { email },
+      { email:user.email },
       process.env.REFRESH_TOKEN_SECRET_2,
       { expiresIn: "1d" }
     );
@@ -64,16 +66,12 @@ const handleRegister = async (req, res) => {
       // secure: true, // Uncomment this line if you are using HTTPS in production
     });
 
-    res.json({
+    // Send the success response
+    res.status(201).json({
       email,
       accessToken,
-      //roles,
-      success: `User logged in ${email} ${password}`,
+      success: `New user ${name} ${email} created!`,
     });
-    // Send the success response
-    res
-      .status(201)
-      .json({ success: `New user ${name} ${email} ${token}created!` });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

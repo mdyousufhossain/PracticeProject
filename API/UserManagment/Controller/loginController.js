@@ -1,8 +1,9 @@
 const Userdb = require("../Model/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-//const generateTokensAndSetCookies = require('../config/tokengenerator') 
-require('dotenv').config();
+const { logEvents } = require("../Middleware/logger");
+//const generateTokensAndSetCookies = require('../config/tokengenerator')
+require("dotenv").config();
 
 const loginHandler = async (req, res) => {
   const { email, password } = req.body;
@@ -18,30 +19,34 @@ const loginHandler = async (req, res) => {
     return res
       .sendStatus(401)
       .json({ message: "No register account Please create an account " });
-  
-  if (duplicate.accountLockedUntil && duplicate.accountLockedUntil > new Date()) {
-        return res.status(401).json({
-          message: 'Account locked. Too many failed login attempts. Try again later.',
-        });
+
+  // extra layer of defend checking if this account already tried multiple times
+  if (
+    duplicate.accountLockedUntil &&
+    duplicate.accountLockedUntil > new Date()
+  ) {
+    return res.status(401).json({
+      message:
+        "Account locked. Too many failed login attempts. Try again later.",
+    });
   }
 
-  // comparing password  
-  const match = await bcrypt.compare(password,duplicate.password);
+  // comparing password
+  const match = await bcrypt.compare(password, duplicate.password);
 
   if (match) {
     // Reset login attempts upon successful login
+    // this is direcly from the database we can use cache for this
     duplicate.loginAttempts = 0;
     duplicate.accountLockedUntil = null; // Reset account lockout
     await duplicate.save();
 
     const roles = Object.values(duplicate.roles).filter(Boolean);
-
-    console.log(roles)
     const accessToken = jwt.sign(
       {
-            "email": duplicate.email,
-            "roles": roles
-    },
+        email: duplicate.email,
+        roles: roles,
+      },
       process.env.ACCESS_TOKEN_SECRET_1,
       { expiresIn: "15m" }
     );
@@ -55,8 +60,7 @@ const loginHandler = async (req, res) => {
 
     // Save the refresh token in the database (assuming "duplicate" is the user)
     duplicate.refreshToken = refreshToken;
-    const result = await duplicate.save();
-    console.log(result);
+    await duplicate.save();
 
     // Set cookies in the response ___
     res.cookie("jwt", refreshToken, {
@@ -71,19 +75,19 @@ const loginHandler = async (req, res) => {
       accessToken,
       success: `User logged in ${email} ${password}`,
     });
-    console.log("user logged in:", email);
   } else {
     // Increment login attempts on each failed attempt
     duplicate.loginAttempts++;
     await duplicate.save();
 
-    if (duplicate.loginAttempts >= 3) {
+    if (duplicate.loginAttempts >= 5) {
       // Lock the account for 15 minutes
-      duplicate.accountLockedUntil = new Date(Date.now() + 1 * 60 * 1000); // should be at least 15 in prod 
+      duplicate.accountLockedUntil = new Date(Date.now() + 1 * 60 * 1000); // should be at least 15 in prod
       await duplicate.save();
 
       return res.status(401).json({
-        message: 'Account locked. Too many failed login attempts. Try again later.',
+        message:
+          "Account locked. Too many failed login attempts. Try again later.",
       });
     }
 
@@ -91,6 +95,5 @@ const loginHandler = async (req, res) => {
     return res.sendStatus(401);
   }
 };
-
 
 module.exports = loginHandler;

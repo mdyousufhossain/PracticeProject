@@ -1,75 +1,65 @@
 // dependies
-const express  = require('express')
-const connectDB = require('./config/dbConfig')
-require('dotenv').config();
-const cors = require('cors')
-const cookieParser = require('cookie-parser');
-const corsOptions = require('./config/corsOptions')
-const logger = require('./Middleware/logger')
-const errorHandler = require('./Middleware/errorHandle')
-
+const express = require("express");
+const connectDB = require("./config/dbConfig");
+require("dotenv").config();
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const corsOptions = require("./config/corsOptions");
+const { logger } = require("./Middleware/logger");
+const errorHandler = require("./Middleware/errorHandle");
 
 //routes
-const userRoute = require('./Route/api/userRoute')
-const refresh = require('./Route/refresh')
-const registerRoute = require('./Route/registerRoute')
-const logoutRoute = require('./Route/logoutRoute')
-const loginRoute = require('./Route/loginRoute')
+const userRoute = require("./Route/api/userRoute");
+const refresh = require("./Route/refresh");
+const registerRoute = require("./Route/registerRoute");
+const logoutRoute = require("./Route/logoutRoute");
+const loginRoute = require("./Route/loginRoute");
 
+//middleware
+const verifyJWT = require("./Middleware/verifyJWT");
+const credentials = require("./Middleware/credentials");
 
-//middleware 
-const verifyJWT = require('./Middleware/verifyJWT')
-const credentials = require('./Middleware/credentials')
+// server
+const app = express();
+const PORT = 5050;
 
-// server 
-const app =  express()
-const PORT = 5050 
-
-
-
+app.use(logger);
 // app.use(credentials)
 // middleware
-app.use(credentials)
+app.use(credentials);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
-
 // register
-app.use('/api/v1/', registerRoute)
-// login 
-app.use('/api/v1/', loginRoute)
-// refresh token 
-app.use('/api/v1/' , refresh)
-// logout 
-app.use('/api/v1/' , logoutRoute)
+app.use("/api/v1/", registerRoute);
+// login
+app.use("/api/v1/", loginRoute);
+// refresh token
+app.use("/api/v1/", refresh);
+// logout
+app.use("/api/v1/", logoutRoute);
 //api
 
-app.use(verifyJWT) // authentication 
-app.use('/api/v1/', userRoute )
+app.use(verifyJWT); // authentication
+app.use("/api/v1/", userRoute);
 
-// error handler 
-app.use(errorHandler)
+// error handler
+//app.use(errorHandler)
 
 const startServer = async () => {
-    try {
-      //calling for database connection
-      await connectDB();
-      // starting the server
-      app.listen(PORT, () => {
-        console.log(`server started at : http://localhost:${PORT}/`);
-      });
+  try {
+    //calling for database connection
+    await connectDB();
+    // starting the server
+    app.listen(PORT, () => {
+      console.log(`server started at : http://localhost:${PORT}/`);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  // calling server
-  startServer();
-
-
-
-
+// calling server
+startServer();

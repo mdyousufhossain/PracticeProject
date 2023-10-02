@@ -14,6 +14,7 @@ const userScemadb = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // roles cannot be set in route gotta do it in database
   roles: {
     User: {
       type: Number,

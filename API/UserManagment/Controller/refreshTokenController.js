@@ -13,7 +13,6 @@ const handleRefreshToken = async (req, res) => {
 
   const UserToken = await Userdb.findOne({ refreshToken });
   //console.log(UserToken)
-
   
   if (!UserToken) {
     return res.sendStatus(403);
