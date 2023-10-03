@@ -2,12 +2,13 @@ const UserDb = require("../Model/UserModel");
 
 class MainController {
   constructor(database) {
-    this.db = database; // Store the database connection or instance
+    // Store the database connection or instance
+    this.db = database; 
   }
 
   async getAllUser(req, res) {
     try {
-      const userList = await this.db.find(); // Use the provided database connection
+      const userList = await this.db.find(); 
       if (!userList) return res.status(204).json({ message: "No User found" });
 
       res.json(userList);
@@ -21,7 +22,7 @@ class MainController {
     try {
       const { id } = req.params;
 
-      const user = await this.db.findById(id); // Use the provided database connection
+      const user = await this.db.findById(id); 
 
       if (!user)
         return res.status(404).json({ message: `No item was found: ${id}` });
@@ -37,7 +38,7 @@ class MainController {
     try {
       const { id } = req.params;
 
-      const user = await this.db.findByIdAndDelete(id); // Use the provided database connection
+      const user = await this.db.findByIdAndDelete(id); 
 
       if (!user)
         return res.status(404).json({ message: `No User was found: ${id}` });
@@ -83,4 +84,6 @@ class MainController {
   }
 }
 
+
+// getting updated
 module.exports = MainController;
