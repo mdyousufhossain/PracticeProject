@@ -53,7 +53,7 @@ class MainController {
   async getSingleUserAndUpdate(req, res) {
     try {
       const { id } = req.params;
-
+        //the hell 
       const user = await this.db.findById(id); // Use the provided database connection
 
       if (!user)
