@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const memberSchema = new mongoose.Schema({
+const userScemadb = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -14,16 +14,11 @@ const memberSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // roles cannot be set in route gotta do it in database
-  roles: {
-    User: {
-      type: Number,
-      default: 2001,
-    },
-    Editor: Number,
-    Admin: Number,
+  photo: {
+    type: String,
   },
-  organizations: [{ type: Schema.Types.ObjectId, ref: 'Organization' }],
+  // organization is created or member of a 
+  organizations: [{ type: Schema.Types.ObjectId, ref: "Organization" }],
   refreshToken: {
     type: String,
   },
@@ -40,6 +35,6 @@ const memberSchema = new mongoose.Schema({
   },
 });
 
-const ScemaUser = mongoose.model("member", memberSchema);
+const ScemaUser = mongoose.model("member", userScemadb);
 
 module.exports = ScemaUser;
