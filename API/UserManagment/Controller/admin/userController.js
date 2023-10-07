@@ -1,4 +1,3 @@
-const UserDb = require("../../Model/UserModel");
 
 class MainController {
   constructor(database) {
@@ -9,6 +8,10 @@ class MainController {
   async getAllUser(req, res) {
     try {
       const userList = await this.db.find();
+
+      const item = new Array(userList)
+
+      //console.log(userList.length)
       if (!userList) return res.status(204).json({ message: "No User found" });
 
       res.json(userList);

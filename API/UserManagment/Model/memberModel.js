@@ -1,27 +1,38 @@
 const mongoose = require("mongoose");
 
-const userScemadb = new mongoose.Schema({
+const memberScemadb = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    maxLength:[12,"Name cant be this long"],
+    minLength: [2, "Name cant be this short"]
   },
   email: {
     type: String,
     required: true,
-    minLength: [6, "Password is not strong enough"],
+    // regex to match valid email 
+    // setting a unique att. to prevent having same email to multiple times 
+    match: [
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please Add Valid Email",
+    ],
+    unique: true,
+    trim: true,
   },
   password: {
     type: String,
     required: true,
+    minLength: [6, "Password is not strong enough"],
+    
   },
   photo: {
     type: String,
   },
-  // organization is created or member of a 
-  organizations: [{ type: Schema.Types.ObjectId, ref: "Organization" }],
+  // refresh token from the  jwt 
   refreshToken: {
     type: String,
   },
+  
   // Add loginAttempts field to track failed login attempts
   loginAttempts: {
     type: Number,
@@ -35,6 +46,6 @@ const userScemadb = new mongoose.Schema({
   },
 });
 
-const ScemaUser = mongoose.model("member", userScemadb);
+const ScemaUserMemberdb = mongoose.model("member", memberScemadb);
 
-module.exports = ScemaUser;
+module.exports = ScemaUserMemberdb;

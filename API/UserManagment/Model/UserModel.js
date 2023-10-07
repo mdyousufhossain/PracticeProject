@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const memberSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -8,6 +8,14 @@ const memberSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    // regex to match valid email 
+    // setting a unique att. to prevent having same email to multiple times 
+    match: [
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      "Please Add Valid Email",
+    ],
+    unique: true,
+    trim: true,
     minLength: [6, "Password is not strong enough"],
   },
   password: {
@@ -39,6 +47,6 @@ const memberSchema = new mongoose.Schema({
   },
 });
 
-const ScemaUser = mongoose.model("user1", memberSchema);
+const ScemaUser = mongoose.model("user1", userSchema);
 
 module.exports = ScemaUser;

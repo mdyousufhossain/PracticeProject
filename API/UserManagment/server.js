@@ -15,6 +15,10 @@ const registerRoute = require("./Route/adminRoute/registerRoute");
 const logoutRoute = require("./Route/adminRoute/logoutRoute");
 const loginRoute = require("./Route/adminRoute/loginRoute");
 
+// member statistic
+const memberRoute = require('./Route/adminRoute/api/memberRoute')
+//member route
+const memberRegisterRoute = require('./Route/memberRoute/memberRegisterRoute')
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
 const credentials = require("./Middleware/credentials");
@@ -32,6 +36,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+/* this is admin panel route
+ * 
+ */
+
 // register
 app.use("/api/v1/", registerRoute);
 // login
@@ -42,7 +50,15 @@ app.use("/api/v1/", refresh);
 app.use("/api/v1/", logoutRoute);
 //api
 
+/**
+ * this is member for orgenation route
+*/
+// member register route localhost:5050/api/v2/register/member'
+
+app.use('/api/v2/', memberRegisterRoute)
+
 app.use(verifyJWT); // authentication
+app.use('/api/v1/member', memberRoute)
 app.use("/api/v1/", userRoute);
 
 // error handler
