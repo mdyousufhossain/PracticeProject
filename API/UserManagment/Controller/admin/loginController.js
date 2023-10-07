@@ -1,7 +1,7 @@
-const Userdb = require("../Model/UserModel");
+const Userdb = require("../../Model/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { logEvents } = require("../Middleware/logger");
+const { logEvents } = require("../../Middleware/logger");
 //const generateTokensAndSetCookies = require('../config/tokengenerator')
 require("dotenv").config();
 

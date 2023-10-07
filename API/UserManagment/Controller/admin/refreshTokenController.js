@@ -1,5 +1,5 @@
 require("dotenv").config();
-const Userdb = require("../Model/UserModel");
+const Userdb = require("../../Model/UserModel");
 const jwt = require("jsonwebtoken");
 
 const handleRefreshToken = async (req, res) => {
@@ -13,7 +13,7 @@ const handleRefreshToken = async (req, res) => {
 
   const UserToken = await Userdb.findOne({ refreshToken });
   //console.log(UserToken)
-  
+
   if (!UserToken) {
     return res.sendStatus(403);
   }

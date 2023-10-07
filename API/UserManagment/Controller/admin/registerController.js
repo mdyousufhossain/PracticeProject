@@ -1,14 +1,10 @@
-const Userdb = require("../Model/UserModel");
+const Userdb = require("../../Model/UserModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookie = require("cookie-parser");
 
-
-
-
 const handleRegister = async (req, res) => {
   const { name, email, password } = req.body;
-
 
   try {
     // Checking if there is a user user
@@ -48,7 +44,7 @@ const handleRegister = async (req, res) => {
 
     // Generate refresh token
     const refreshToken = jwt.sign(
-      { email:user.email },
+      { email: user.email },
       process.env.REFRESH_TOKEN_SECRET_2,
       { expiresIn: "1d" }
     );
@@ -78,4 +74,3 @@ const handleRegister = async (req, res) => {
 };
 
 module.exports = handleRegister;
-

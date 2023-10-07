@@ -23,7 +23,6 @@ const memberSchema = new mongoose.Schema({
     Editor: Number,
     Admin: Number,
   },
-  organizations: [{ type: Schema.Types.ObjectId, ref: 'Organization' }],
   refreshToken: {
     type: String,
   },
@@ -40,6 +39,6 @@ const memberSchema = new mongoose.Schema({
   },
 });
 
-const ScemaUser = mongoose.model("member", memberSchema);
+const ScemaUser = mongoose.model("user1", memberSchema);
 
 module.exports = ScemaUser;

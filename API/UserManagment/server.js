@@ -9,11 +9,11 @@ const { logger } = require("./Middleware/logger");
 const errorHandler = require("./Middleware/errorHandle");
 
 //routes
-const userRoute = require("./Route/api/userRoute");
-const refresh = require("./Route/refresh");
-const registerRoute = require("./Route/registerRoute");
-const logoutRoute = require("./Route/logoutRoute");
-const loginRoute = require("./Route/loginRoute");
+const userRoute = require("./Route/adminRoute/api/userRoute");
+const refresh = require("./Route/adminRoute/refresh");
+const registerRoute = require("./Route/adminRoute/registerRoute");
+const logoutRoute = require("./Route/adminRoute/logoutRoute");
+const loginRoute = require("./Route/adminRoute/loginRoute");
 
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
