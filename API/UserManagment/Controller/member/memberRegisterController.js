@@ -32,6 +32,8 @@ const handleMemberRegister = async (req, res) => {
       
     });
 
+    // new user assigned 
+
     console.log(newUser)
     const user = await ScemaUserMemberdb.findOne({ email });
     // generating cookies with the function
