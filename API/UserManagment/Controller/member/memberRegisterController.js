@@ -18,7 +18,7 @@ const handleMemberRegister = async (req, res) => {
     // Checking if required fields are filled
     if (!name || !email || !password) {
       return res
-        .status(400)
+        .status(400) // bad request 
         .json({ error: "Please fill all the required fields" });
     }
 

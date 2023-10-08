@@ -20,6 +20,7 @@ const memberRoute = require('./Route/adminRoute/api/memberRoute')
 //member route
 const memberRegisterRoute = require('./Route/memberRoute/memberRegisterRoute')
 const memberloginRoute = require('./Route/memberRoute/memberLoginRoute')
+const memberLogoutRoute = require('./Route/memberRoute/memberLogoutRoute')
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
 const credentials = require("./Middleware/credentials");
@@ -54,6 +55,8 @@ app.use("/api/v1/", logoutRoute);// logout
 
 app.use('/api/v2/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
 app.use('/api/v2/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
+app.use('/api/v2/', memberLogoutRoute ) // member login or auth route  : localhost:5050/api/v2/member/logout
+
 
 app.use(verifyJWT); // authentication
 app.use('/api/v1/member', memberRoute)

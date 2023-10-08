@@ -125,3 +125,17 @@
 20231007	23:28:37	d5153068-5d89-48ce-a110-3fbf968df03f	GET	undefined	/api/v1/alluser
 20231007	23:30:19	8eaafdef-2569-4727-b100-5bf54eb14e40	GET	undefined	/api/v1/member/alluser
 20231007	23:31:26	22c92bb3-b04d-42cc-8be9-081fea00fb93	GET	undefined	/api/v1/alluser
+20231008	20:16:55	61ca6f93-381a-4a88-b474-cb54b4deab12	POST	undefined	/api/v2/member/register
+20231008	20:17:51	76be2254-725b-4b8e-bb1a-d440b61ca498	POST	undefined	/api/v2/member/register
+20231008	20:21:23	ccdb21e1-0cfe-47c1-bb11-05b108c89c56	POST	undefined	/api/v2/member/register
+20231008	20:22:28	adda1a0d-c5d7-4883-9722-e551a45f2e31	POST	undefined	/api/v2/member/register
+20231008	20:23:46	6d3e71c4-c476-4df0-9f2a-0e0704ea17b8	POST	undefined	/api/v2/member/register
+20231008	20:23:52	e00f73e5-c573-4e95-a00b-973b95c7035a	POST	undefined	/api/v2/member/register
+20231008	20:24:46	ca50ed08-72a0-4dec-bf04-8282bea71277	POST	undefined	/api/v2/member/register
+20231008	20:25:38	3cfb1911-f45a-45dd-a347-ff49901ace51	POST	undefined	/api/v1/register
+20231008	20:25:45	badfe394-7caa-4a6e-8667-a6558b99cd8d	POST	undefined	/api/v2/member/register
+20231008	20:25:55	d4a05fad-0fde-4c7e-9365-b84c370754f3	POST	undefined	/api/v2/member/register
+20231008	20:26:55	e08c2cad-5987-4e2a-b426-ba4ecdfe0f3e	POST	undefined	/api/v2/member/register
+20231008	20:27:21	dc5587b2-b5a9-4f4e-9848-7e66485a1f8d	POST	undefined	/api/v2/member/login
+20231008	20:27:37	505248a8-7470-446c-b24e-6d3a0c307fe5	GET	undefined	/api/v2/member/logout
+20231008	20:32:34	ee5269db-df99-4fe9-9e31-a391d8936f8d	GET	undefined	/api/v2/member/logout
