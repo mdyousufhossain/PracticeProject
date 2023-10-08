@@ -28,6 +28,7 @@ const handleMemberRegister = async (req, res) => {
     const newUser = await ScemaUserMemberdb.create({
       name,
       email,
+      photo,
       password: hashed,
       
     });

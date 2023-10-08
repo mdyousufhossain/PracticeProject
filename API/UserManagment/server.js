@@ -8,7 +8,7 @@ const corsOptions = require("./config/corsOptions");
 const { logger } = require("./Middleware/logger");
 const errorHandler = require("./Middleware/errorHandle");
 
-//routes
+//admin routes
 const userRoute = require("./Route/adminRoute/api/userRoute");
 const refresh = require("./Route/adminRoute/refresh");
 const registerRoute = require("./Route/adminRoute/registerRoute");
@@ -19,6 +19,7 @@ const loginRoute = require("./Route/adminRoute/loginRoute");
 const memberRoute = require('./Route/adminRoute/api/memberRoute')
 //member route
 const memberRegisterRoute = require('./Route/memberRoute/memberRegisterRoute')
+const memberloginRoute = require('./Route/memberRoute/memberLoginRoute')
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
 const credentials = require("./Middleware/credentials");
@@ -41,21 +42,18 @@ app.use(cookieParser());
  */
 
 // register
-app.use("/api/v1/", registerRoute);
-// login
-app.use("/api/v1/", loginRoute);
-// refresh token
-app.use("/api/v1/", refresh);
-// logout
-app.use("/api/v1/", logoutRoute);
-//api
+app.use("/api/v1/", registerRoute); // register localhost:5050/api/v1/register 
+app.use("/api/v1/", loginRoute); //  login localhost:5050/api/v1/login
+app.use("/api/v1/", refresh); // refresh token localhost:5050/api/v1/token
+app.use("/api/v1/", logoutRoute);// logout
+
 
 /**
  * this is member for orgenation route
 */
-// member register route localhost:5050/api/v2/register/member'
 
-app.use('/api/v2/', memberRegisterRoute)
+app.use('/api/v2/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
+app.use('/api/v2/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
 
 app.use(verifyJWT); // authentication
 app.use('/api/v1/member', memberRoute)
