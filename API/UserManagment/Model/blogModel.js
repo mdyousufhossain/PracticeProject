@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user1', // Reference to the User model for the user who created the product
+    ref: 'member', // Reference to the User model for the user who created the product
     required: true,
   },
   // You can add more fields as needed for your specific project

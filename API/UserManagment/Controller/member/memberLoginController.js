@@ -44,7 +44,8 @@ const memberLoginHandler = async (req, res) => {
   
       
       const accessToken = jwt.sign(
-        {
+        { 
+          userid: duplicate._id,
           email: duplicate.email,
         },
         process.env.ACCESS_TOKEN_SECRET_1,
@@ -53,7 +54,9 @@ const memberLoginHandler = async (req, res) => {
   
       // Generate refresh token
       const refreshToken = jwt.sign(
-        { email },
+        { 
+          userid:duplicate._id,
+          email: duplicate.email },
         process.env.REFRESH_TOKEN_SECRET_2,
         { expiresIn: "1d" }
       );

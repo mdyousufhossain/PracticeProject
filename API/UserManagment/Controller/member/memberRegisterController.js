@@ -41,7 +41,8 @@ const handleMemberRegister = async (req, res) => {
     //const roles = Object.values(user.roles).filter(Boolean);
 
     const accessToken = jwt.sign(
-      {
+      { 
+        userid:user._id,
         email: user.email,
       },
       process.env.ACCESS_TOKEN_SECRET_1,
@@ -50,7 +51,11 @@ const handleMemberRegister = async (req, res) => {
 
     // Generate refresh token
     const refreshToken = jwt.sign(
-      { email: user.email },
+      { 
+        userid:user._id,
+        email: user.email 
+        
+      },
       process.env.REFRESH_TOKEN_SECRET_2,
       { expiresIn: "1d" }
     );

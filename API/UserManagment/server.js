@@ -21,6 +21,13 @@ const memberRoute = require('./Route/adminRoute/api/memberRoute')
 const memberRegisterRoute = require('./Route/memberRoute/memberRegisterRoute')
 const memberloginRoute = require('./Route/memberRoute/memberLoginRoute')
 const memberLogoutRoute = require('./Route/memberRoute/memberLogoutRoute')
+
+// blog route
+
+const createPostRoute = require('./Controller/blog/blogMakerController')
+const blogRoute = require('./Route/blogRoute/api/blogRoute')
+
+
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
 const credentials = require("./Middleware/credentials");
@@ -57,8 +64,10 @@ app.use('/api/v2/', memberRegisterRoute) // member register route localhost:5050
 app.use('/api/v2/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
 app.use('/api/v2/', memberLogoutRoute ) // member login or auth route  : localhost:5050/api/v2/member/logout
 
-
 app.use(verifyJWT); // authentication
+
+app.use('/api/v2/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
+app.use('/api/v2/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
 app.use('/api/v1/member', memberRoute)
 app.use("/api/v1/", userRoute);
 
