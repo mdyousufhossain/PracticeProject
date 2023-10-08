@@ -4,7 +4,7 @@ const loginRateLimiter = require('../../../Middleware/loginRateLimit');
 
 const findPostsCreatedByUser = require('../../../Controller/blog/blogController')
 
-router.get('/blog/posts' ,loginRateLimiter, findPostsCreatedByUser )
+router.get('/blog/posts',  findPostsCreatedByUser )
 
 
 module.exports = router 

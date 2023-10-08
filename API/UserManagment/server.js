@@ -66,8 +66,8 @@ app.use('/api/v2/', memberLogoutRoute ) // member login or auth route  : localho
 
 app.use(verifyJWT); // authentication
 
-app.use('/api/v2/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
 app.use('/api/v2/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
+app.use('/api/v2/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
 app.use('/api/v1/member', memberRoute)
 app.use("/api/v1/", userRoute);
 
