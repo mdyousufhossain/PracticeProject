@@ -8,12 +8,25 @@ const corsOptions = require("./config/corsOptions");
 const { logger } = require("./Middleware/logger");
 const errorHandler = require("./Middleware/errorHandle");
 
-//routes
-const userRoute = require("./Route/api/userRoute");
-const refresh = require("./Route/refresh");
-const registerRoute = require("./Route/registerRoute");
-const logoutRoute = require("./Route/logoutRoute");
-const loginRoute = require("./Route/loginRoute");
+//admin routes
+const userRoute = require("./Route/adminRoute/api/userRoute");
+const refresh = require("./Route/adminRoute/refresh");
+const registerRoute = require("./Route/adminRoute/registerRoute");
+const logoutRoute = require("./Route/adminRoute/logoutRoute");
+const loginRoute = require("./Route/adminRoute/loginRoute");
+
+// member statistic
+const memberRoute = require('./Route/adminRoute/api/memberRoute')
+//member route
+const memberRegisterRoute = require('./Route/memberRoute/memberRegisterRoute')
+const memberloginRoute = require('./Route/memberRoute/memberLoginRoute')
+const memberLogoutRoute = require('./Route/memberRoute/memberLogoutRoute')
+
+// blog route
+
+const createPostRoute = require('./Controller/blog/blogMakerController')
+const blogRoute = require('./Route/blogRoute/api/blogRoute')
+
 
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
@@ -32,17 +45,30 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+/* this is admin panel route
+ * 
+ */
+
 // register
-app.use("/api/v1/", registerRoute);
-// login
-app.use("/api/v1/", loginRoute);
-// refresh token
-app.use("/api/v1/", refresh);
-// logout
-app.use("/api/v1/", logoutRoute);
-//api
+app.use("/api/v1/", registerRoute); // register localhost:5050/api/v1/register 
+app.use("/api/v1/", loginRoute); //  login localhost:5050/api/v1/login
+app.use("/api/v1/", refresh); // refresh token localhost:5050/api/v1/token
+app.use("/api/v1/", logoutRoute);// logout
+
+
+/**
+ * this is member for orgenation route
+*/
+
+app.use('/api/v2/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
+app.use('/api/v2/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
+app.use('/api/v2/', memberLogoutRoute ) // member login or auth route  : localhost:5050/api/v2/member/logout
 
 app.use(verifyJWT); // authentication
+
+app.use('/api/v2/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
+app.use('/api/v2/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
+app.use('/api/v1/member', memberRoute)
 app.use("/api/v1/", userRoute);
 
 // error handler

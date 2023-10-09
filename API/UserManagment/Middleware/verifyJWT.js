@@ -14,8 +14,8 @@ const verifyJWT = (req, res, next) => {
         }
 
         // Token is valid, set user information in the request object
-        req.user = decoded.email;
-        req.roles = decoded.roles;
+        req.email = decoded.email;
+        req.userid = decoded.userid;
         next();
     });
 };

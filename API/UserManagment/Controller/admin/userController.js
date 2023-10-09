@@ -1,14 +1,17 @@
-const UserDb = require("../Model/UserModel");
 
 class MainController {
   constructor(database) {
     // Store the database connection or instance
-    this.db = database; 
+    this.db = database;
   }
 
   async getAllUser(req, res) {
     try {
-      const userList = await this.db.find(); 
+      const userList = await this.db.find();
+
+      const item = new Array(userList)
+
+      //console.log(userList.length)
       if (!userList) return res.status(204).json({ message: "No User found" });
 
       res.json(userList);
@@ -22,7 +25,7 @@ class MainController {
     try {
       const { id } = req.params;
 
-      const user = await this.db.findById(id); 
+      const user = await this.db.findById(id);
 
       if (!user)
         return res.status(404).json({ message: `No item was found: ${id}` });
@@ -38,7 +41,7 @@ class MainController {
     try {
       const { id } = req.params;
 
-      const user = await this.db.findByIdAndDelete(id); 
+      const user = await this.db.findByIdAndDelete(id);
 
       if (!user)
         return res.status(404).json({ message: `No User was found: ${id}` });
@@ -53,26 +56,22 @@ class MainController {
   async getSingleUserAndUpdate(req, res) {
     try {
       const { id } = req.params;
-        //the hell 
+
+      //const arr = {...obj}
       const user = await this.db.findById(id); // Use the provided database connection
 
       if (!user)
         return res.status(404).json({ message: `No User was found: ${id}` });
+      // checking name
 
+      // updatetor can be added more if we want
       if (!req.body.name) {
         return res
           .status(400)
           .json({ message: "Name field is required for update" });
       }
 
-      if (req.body.email || req.body.password) {
-        return res
-          .status(401)
-          .json({
-            message: "Authentication required for email and password updates",
-          });
-      }
-
+      // updating name
       user.name = req.body.name;
       const updatedUser = await user.save();
 
@@ -83,7 +82,6 @@ class MainController {
     }
   }
 }
-
 
 // getting updated
 module.exports = MainController;
