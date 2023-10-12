@@ -45,34 +45,40 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-/* this is admin panel route
+/*    
+ this is admin panel route
  * 
  */
 
 // register
+
 app.use("/api/v1/", registerRoute); // register localhost:5050/api/v1/register 
 app.use("/api/v1/", loginRoute); //  login localhost:5050/api/v1/login
 app.use("/api/v1/", refresh); // refresh token localhost:5050/api/v1/token
 app.use("/api/v1/", logoutRoute);// logout
 
 
-/**
- * this is member for orgenation route
+/*
+ * 
+ * This is member for orgenation route
+ * 
 */
 
 app.use('/api/v2/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
 app.use('/api/v2/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
-app.use('/api/v2/', memberLogoutRoute ) // member login or auth route  : localhost:5050/api/v2/member/logout
+app.use('/api/v2/', memberLogoutRoute ) // member logout or auth route  : localhost:5050/api/v2/member/logout
+
+// admin only admin can access 
+app.use('/api/v2/members/', memberRoute)
+app.use("/api/v1/", userRoute);
 
 app.use(verifyJWT); // authentication
 
 app.use('/api/v2/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
 app.use('/api/v2/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
-app.use('/api/v1/member', memberRoute)
-app.use("/api/v1/", userRoute);
 
 // error handler
-//app.use(errorHandler)
+// app.use(errorHandler)
 
 const startServer = async () => {
   try {

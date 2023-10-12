@@ -71,6 +71,7 @@ const loginHandler = async (req, res) => {
     });
 
     res.json({
+      roles,
       email,
       accessToken,
       success: `User logged in ${email} ${password}`,
