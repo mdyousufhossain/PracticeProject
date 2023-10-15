@@ -28,6 +28,11 @@ const memberScemadb = new mongoose.Schema({
   photo: {
     type: String,
   },
+
+  orgenazation: {
+    type:mongoose.Schema.Types.ObjectId,
+    ref: 'Organization', // Reference to the Me
+  },
   // refresh token from the  jwt 
   refreshToken: {
     type: String,

@@ -27,6 +27,9 @@ const memberLogoutRoute = require('./Route/memberRoute/memberLogoutRoute')
 const createPostRoute = require('./Controller/blog/blogMakerController')
 const blogRoute = require('./Route/blogRoute/api/blogRoute')
 
+// org 
+
+const orgCreateRoute = require('./Route/OrgRout/orgCreateRoute')
 
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
@@ -64,18 +67,20 @@ app.use("/api/v1/", logoutRoute);// logout
  * 
 */
 
-app.use('/api/v2/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
-app.use('/api/v2/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
-app.use('/api/v2/', memberLogoutRoute ) // member logout or auth route  : localhost:5050/api/v2/member/logout
+app.use('/api/v1/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
+app.use('/api/v1/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
+app.use('/api/v1/', memberLogoutRoute ) // member logout or auth route  : localhost:5050/api/v2/member/logout
 
 // admin only admin can access 
-app.use('/api/v2/members/', memberRoute)
+app.use('/api/v1/members/', memberRoute)
 app.use("/api/v1/", userRoute);
 
-app.use(verifyJWT); // authentication
 
-app.use('/api/v2/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
-app.use('/api/v2/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
+app.use(verifyJWT); // authentication
+app.use('/api/v1/member', orgCreateRoute)
+app.use('/api/v1/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
+//app.use('/api/v1/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
+
 
 // error handler
 // app.use(errorHandler)
