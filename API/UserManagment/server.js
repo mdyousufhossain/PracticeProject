@@ -28,8 +28,8 @@ const createPostRoute = require('./Controller/blog/blogMakerController')
 const blogRoute = require('./Route/blogRoute/api/blogRoute')
 
 // org 
-
 const orgCreateRoute = require('./Route/OrgRout/orgCreateRoute')
+const userjoinRoute = require('./Route/OrgRout/userJoinRoute')
 
 //middleware
 const verifyJWT = require("./Middleware/verifyJWT");
@@ -72,12 +72,13 @@ app.use('/api/v1/', memberloginRoute ) // member login or auth route  : localhos
 app.use('/api/v1/', memberLogoutRoute ) // member logout or auth route  : localhost:5050/api/v2/member/logout
 
 // admin only admin can access 
-app.use('/api/v1/members/', memberRoute)
+app.use('/api/v1/members', memberRoute)
 app.use("/api/v1/", userRoute);
 
 
 app.use(verifyJWT); // authentication
 app.use('/api/v1/member', orgCreateRoute)
+app.use('/api/v1/member', userjoinRoute)
 app.use('/api/v1/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
 //app.use('/api/v1/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
 

@@ -5,6 +5,6 @@ const loginRateLimiter = require("../../Middleware/loginRateLimit");
 
 const handleMemberRegister = require('../../Controller/member/memberRegisterController')
 
-router.post('/member/register', handleMemberRegister)
+router.post('/members/register', handleMemberRegister)
 
 module.exports = router

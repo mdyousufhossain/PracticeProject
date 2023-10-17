@@ -5,14 +5,20 @@ const creatingOrg = async (req, res) => {
     try {
       const { name, logo, moto, package, members } = req.body;
   
-      const creatorId = req.userid; // Make sure req.userid is correctly set based on your authentication mechanism
-  
+      const creatorId = req.email; // Make sure req.userid is correctly set based on your authentication mechanism
+      
+      
+      const firstMember = {
+        email : creatorId,
+        role : 5051
+      }
+
       const newOrganization = await OrgSchema.create({
         name,
         logo,
         moto,
         package,
-        members,
+        "members" : firstMember,
         creatorId,
       });
   

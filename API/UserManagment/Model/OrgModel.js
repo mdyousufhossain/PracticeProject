@@ -13,22 +13,19 @@ const organizationSchema = new mongoose.Schema({
   package:{
     type:String
   },
-  members: [
-    {
-      user: { type: mongoose.Schema.Types.ObjectId, ref: "member" },
-      role: { type: mongoose.Schema.Types.ObjectId, ref: "Role" },
-    },
-  ],
-  creatorId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'member', // Reference to the Member model for the user who created the Org
-    required: true,
-  },
+  members: [{
+    id : String,
+    name: String,
+    email:String,
+    role: Number
+
+  }],
+  creatorId: {},
 });
 
 const OrgSchema = mongoose.model("Organization", organizationSchema);
 
-module.exports = organizationSchema;
+module.exports = OrgSchema;
 
 
 /**

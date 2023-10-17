@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const loginRateLimiter = require('../../Middleware/loginRateLimit');
-const createController = require('../../Controller/orgenazation/createController')
+const memberJoinOrg = require('../../Controller/orgenazation/joinOrg')
 
-router.post('/org/create',createController)
+router.get('/org/join/:id', memberJoinOrg)
 
 module.exports = router
