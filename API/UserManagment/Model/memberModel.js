@@ -4,14 +4,14 @@ const memberScemadb = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    maxLength:[12,"Name cant be this long"],
-    minLength: [2, "Name cant be this short"]
+    maxLength: [12, "Name cant be this long"],
+    minLength: [2, "Name cant be this short"],
   },
   email: {
     type: String,
     required: true,
-    // regex to match valid email 
-    // setting a unique att. to prevent having same email to multiple times 
+    // regex to match valid email
+    // setting a unique att. to prevent having same email to multiple times
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       "Please Add Valid Email",
@@ -23,21 +23,23 @@ const memberScemadb = new mongoose.Schema({
     type: String,
     required: true,
     minLength: [6, "Password is not strong enough"],
-    
   },
   photo: {
     type: String,
   },
 
-  orgenazation: {
-    type:mongoose.Schema.Types.ObjectId,
-    ref: 'Organization', // Reference to the Me
-  },
-  // refresh token from the  jwt 
+  orgenazation: [
+     {
+      Orgid : String,
+      Orgname: String,
+      MemberRole: Number
+    }
+  ],
+  // refresh token from the  jwt
   refreshToken: {
     type: String,
   },
-  
+
   // Add loginAttempts field to track failed login attempts
   loginAttempts: {
     type: Number,

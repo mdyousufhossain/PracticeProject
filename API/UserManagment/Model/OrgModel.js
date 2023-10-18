@@ -20,7 +20,7 @@ const organizationSchema = new mongoose.Schema({
     role: Number
 
   }],
-  creatorId: {},
+  creatorId: {},// gotta improve the validation 
 });
 
 const OrgSchema = mongoose.model("Organization", organizationSchema);
