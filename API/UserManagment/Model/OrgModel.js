@@ -1,9 +1,21 @@
 const mongoose = require("mongoose");
 
+/**
+ * how do user will access the orgnezation ?
+ * 
+ * user login -> authenticator check if user is creator of any orgenzation if user own any  orgenzation , that org id should query into the    database . if found then then check orgenzation creaded by if he own it or not by checking user id ..  
+ */
+
+
+
+
+
+
 const organizationSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required:true,
+    unique:true,
     maxLength: [16, "Name cant be this long"],
     minLength: [2, "Password is not strong enough"],
   },

@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
     Editor: Number,
     Admin: Number,
   },
+  
   refreshToken: {
     type: String,
   },
