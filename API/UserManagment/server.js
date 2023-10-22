@@ -53,8 +53,19 @@ app.use(cookieParser());
  * 
  */
 
-// register
 
+ // Default root route
+ app.get('/', (req, res) => {
+   res.send('This is the default root page.');
+ });
+ 
+ // 404 route
+ app.use('*', (req, res) => {
+   res.status(404).send('Page not found.');
+ });
+ 
+
+// register
 app.use("/api/v1/", registerRoute); // register localhost:5050/api/v1/register 
 app.use("/api/v1/", loginRoute); //  login localhost:5050/api/v1/login
 app.use("/api/v1/", refresh); // refresh token localhost:5050/api/v1/token
