@@ -10,6 +10,7 @@ const handleMemberRegister = async (req, res) => {
 
   try {
     // Checking if there is a user user
+    console.log('Recived data!!,', req.body)
     const existingUser = await ScemaUserMemberdb.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ error: "This email is already in use" });

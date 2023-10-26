@@ -40,10 +40,10 @@ const app = express();
 const PORT = 5050;
 
 app.use(logger);
-// app.use(credentials)
+app.use(credentials)
 // middleware
 app.use(credentials);
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -55,14 +55,11 @@ app.use(cookieParser());
 
 
  // Default root route
- app.get('/', (req, res) => {
-   res.send('This is the default root page.');
- });
+//  app.get('/', (req, res) => {
+//    res.send('This is the default root page.');
+//  });
  
- // 404 route
- app.use('*', (req, res) => {
-   res.status(404).send('Page not found.');
- });
+
  
 
 // register
@@ -93,7 +90,9 @@ app.use('/api/v1/member', userjoinRoute)
 app.use('/api/v1/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
 //app.use('/api/v1/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
 
-
+// app.use('*', (req, res) => {
+//   res.status(404).send('Page not found.');
+// });
 // error handler
 // app.use(errorHandler)
 

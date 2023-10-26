@@ -55,7 +55,11 @@ const memberJoinOrg = async (req, res) => {
     
     const result  = await ismemberExist.save()
     console.log(result) // 
-    await OrgModel.updateOne({ _id: org._id }, { $push: { members: finalMember } });
+     
+    // using atomic aproch
+    org.members.push(finalMember);
+    await org.save();
+
     res.status(200).json({success:'new member joined ',finalMember});
   } catch (error) {
     res.status(500).json({ msg: error.message });
