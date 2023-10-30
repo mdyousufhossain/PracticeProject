@@ -1,4 +1,11 @@
+import MemberRegister from "@/components/siginUp"
+
 const Home = () => {
-  return <div>Home</div>
+  return (
+    <>
+        <MemberRegister />
+    
+    </>
+  )
 }
 export default Home

@@ -1,13 +1,15 @@
 'use client'
 import { ChangeEvent, FormEvent, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 type MemberRegisterState = {
   name: string
   email: string
   password: string
   successMessage: string | null
-  errorMessage: Error | unknown
-  redirectUrl: string | null
+  errorMessage: Error | any
+  statusCode: string | null | number
+  filled: any
 }
 
 const MemberRegister: React.FC = () => {
@@ -17,8 +19,12 @@ const MemberRegister: React.FC = () => {
     password: '',
     successMessage: null,
     errorMessage: null,
-    redirectUrl: null,
+    statusCode: null,
   })
+
+  const router = useRouter();
+
+  
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [e.target.name]: e.target.value })
@@ -50,73 +56,96 @@ const MemberRegister: React.FC = () => {
         setState({
           ...state,
           successMessage: 'Member registered successfully!',
-          redirectUrl: '/authenticate',
+          statusCode: response.status,
         })
+      
+        router.push('/onboarding')
       } else if (response.status === 400) {
         console.log(`HTTP response code: ${response.status}`)
         setState({
           ...state,
           errorMessage: 'Fill in all the required information',
-          redirectUrl: '/something',
+          statusCode: response.status,
         })
+     
+        router.push('/balsal')
       } else if (response.status === 409) {
         console.log(`HTTP response code: ${response.status}`)
         setState({
           ...state,
           errorMessage: 'Email is already in use',
-          redirectUrl: '/login',
+          statusCode: response.status,
         })
+
+        router.push('/bal')
       }
-    } catch (Error ) {
+    } catch (Error) {
       // Set the error message.
       setState({ ...state, errorMessage: Error.message })
     }
+    console.log(state.statusCode)
   }
 
+  const focusColor = state.statusCode === 409 ? 'focus:outline-black-500' : 'focus:outline-red-500'
   // Render the success message, error message, or redirect the user based on the state variable.
-
   return (
-    <form
-      method='post'
-      action={'http://localhost:5050/api/v1/members/register'}
-      onSubmit={handleSubmit}
-    >
-      <div className='p-4 m-4 text-cyan-600'>
-        <div className='p-4'>
-          <label>Name:</label>
-          <input
-            type='text'
-            name='name'
-            placeholder='Name'
-            value={state.name}
-            onChange={handleInputChange}
-            className='text-black-600'
-          />
-        </div>
-        <div className='p-4'>
-          <label>email:</label>
+    <>
+      <form
+        method='post'
+        action={'http://localhost:5050/api/v1/members/register'}
+        onSubmit={handleSubmit}
+      >
+        <div className='bg-primary-100 text-text-dark500_light700  flex-center flex-col'>
+          <div className='p-4'>
+            <label>Name:</label>
+            <input
+              type='text'
+              name='name'
+              placeholder='Name'
+              value={state.name}
+              onChange={handleInputChange}
+              className={`px-2 py-2 rounded-sm  ${focusColor}`}
+              required
+            />
+          </div>
+          <div className='p-4'>
+            <label>email:</label>
 
-          <input
-            type='email'
-            name='email'
-            placeholder='Email'
-            value={state.email}
-            onChange={handleInputChange}
-          />
+            <input
+              type='email'
+              name='email'
+              placeholder='Email'
+              className={`px-2 py-2 rounded-sm ${focusColor}`}
+              value={state.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className='p-4'>
+            <label>password:</label>
+            <input
+              type='password'
+              name='password'
+              placeholder='Password'
+              className={`px-2 py-2 rounded-sm ${focusColor}`}
+              value={state.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
         </div>
-        <div className='p-4'>
-          <label>password:</label>
-          <input
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={state.password}
-            onChange={handleInputChange}
-          />
-        </div>
+        <button
+          className='btn-secondary py-2 px-6 text-dark500_light700 rounded-sm '
+          type='submit'
+        >
+          Submit
+        </button>
+      </form>
+      <div>
+        <h1>this is : {(state.statusCode)} </h1>
+        <h1> {state.errorMessage}</h1>
       </div>
-      <button type='submit'>Submit</button>
-    </form>
+    </>
   )
 }
 
