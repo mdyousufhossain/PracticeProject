@@ -1,9 +1,0 @@
-{
-    "testEnvironment": "node",
-    "testMatch": ["**/*.test.js"],
-    "collectCoverage": true,
-    "coverageReporters": ["text", "lcov"],
-    "coverageDirectory": "coverage",
-    "verbose": true
-  }
-  
