@@ -7,9 +7,9 @@ require('dotenv').config()
 
 const memberLoginHandler = async (req, res) => {
   const { email, password } = req.body
-
+  console.log(req.body)
   if (!email || !password)
-    return res.status(400).json({ message: 'Please Add email or password' })
+     return res.status(400).json({ message: 'Please Add email or password' })
 
   const duplicate = await memberdb.findOne({ email })
 
@@ -35,12 +35,16 @@ const memberLoginHandler = async (req, res) => {
   if (match) {
     // Reset login attempts upon successful login
     // this is direcly from the database we can use cache for this
-    const updatedDuplicate = {
-      ...duplicate,
-      loginAttempts: 0,
-      accountLockedUntil: null,
-    }
-    await memberdb.updateOne({ _id: duplicate._id }, updatedDuplicate)
+    // const updatedDuplicate = {
+    //   ...duplicate,
+    //   loginAttempts: 0,
+    //   accountLockedUntil: null,
+    // }
+    // await memberdb.updateOne({ _id: duplicate._id }, updatedDuplicate)
+
+    duplicate.loginAttempts = 0;
+    duplicate.accountLockedUntil = null; // Reset account lockout
+    await duplicate.save();
 
     const accessToken = jwt.sign(
       {
@@ -80,11 +84,8 @@ const memberLoginHandler = async (req, res) => {
     });
   } else {
     // Increment login attempts on each failed attempt
-    const updatedDuplicate = {
-      ...duplicate,
-      loginAttempts: duplicate.loginAttempts + 1,
-    }
-    await memberdb.updateOne({ _id: duplicate._id }, updatedDuplicate)
+    duplicate.loginAttempts++;
+    await duplicate.save();
 
     if (duplicate.loginAttempts >= 5) {
       // Lock the account for 15 minutes

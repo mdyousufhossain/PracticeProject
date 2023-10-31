@@ -1,30 +1,30 @@
 'use client'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Error from 'next/error'
 
-type MemberRegisterState = {
+
+type MemberRegister = {
   name: string
   email: string
   password: string
   successMessage: string | null
-  errorMessage: Error | any
-  statusCode: string | null | number
+  errorMessage: Error | unknown
+  statusCode: number | any
   filled: any
 }
 
 const MemberRegister: React.FC = () => {
-  const [state, setState] = useState<MemberRegisterState>({
+  const [state, setState] = useState({
     name: '',
     email: '',
     password: '',
-    successMessage: null,
-    errorMessage: null,
-    statusCode: null,
+    successMessage: '',
+    errorMessage: '',
+    statusCode: 0,
   })
 
-  const router = useRouter();
-
-  
+  const router = useRouter()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, [e.target.name]: e.target.value })
@@ -58,7 +58,7 @@ const MemberRegister: React.FC = () => {
           successMessage: 'Member registered successfully!',
           statusCode: response.status,
         })
-      
+
         router.push('/onboarding')
       } else if (response.status === 400) {
         console.log(`HTTP response code: ${response.status}`)
@@ -67,7 +67,7 @@ const MemberRegister: React.FC = () => {
           errorMessage: 'Fill in all the required information',
           statusCode: response.status,
         })
-     
+
         router.push('/balsal')
       } else if (response.status === 409) {
         console.log(`HTTP response code: ${response.status}`)
@@ -81,12 +81,15 @@ const MemberRegister: React.FC = () => {
       }
     } catch (Error) {
       // Set the error message.
-      setState({ ...state, errorMessage: Error.message })
+      setState({ ...state, errorMessage: Error.message})
     }
     console.log(state.statusCode)
   }
 
-  const focusColor = state.statusCode === 409 ? 'focus:outline-black-500' : 'focus:outline-red-500'
+  const focusColor =
+    state.statusCode === 409
+      ? 'focus:outline-black-500'
+      : 'focus:outline-red-500'
   // Render the success message, error message, or redirect the user based on the state variable.
   return (
     <>
@@ -142,7 +145,7 @@ const MemberRegister: React.FC = () => {
         </button>
       </form>
       <div>
-        <h1>this is : {(state.statusCode)} </h1>
+        <h1>this is : {state.statusCode} </h1>
         <h1> {state.errorMessage}</h1>
       </div>
     </>

@@ -41,8 +41,8 @@ const PORT = 5050;
 
 app.use(logger);
 // middleware
-app.use(credentials);
-app.use(cors(corsOptions));
+//app.use(credentials);
+//app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -53,7 +53,7 @@ app.use(cookieParser());
  */
 
 
- // Default root route
+// Default root route
 //  app.get('/', (req, res) => {
 //    res.send('This is the default root page.');
 //  });
