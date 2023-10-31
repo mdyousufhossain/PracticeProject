@@ -40,7 +40,6 @@ const app = express();
 const PORT = 5050;
 
 app.use(logger);
-app.use(credentials)
 // middleware
 app.use(credentials);
 app.use(cors(corsOptions));
@@ -76,7 +75,7 @@ app.use("/api/v1/", logoutRoute);// logout
 */
 
 app.use('/api/v1/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
-app.use('/api/v1/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v2/member/login 
+app.use('/api/v1/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v1/member/login 
 app.use('/api/v1/', memberLogoutRoute ) // member logout or auth route  : localhost:5050/api/v2/member/logout
 
 // admin only admin can access 
