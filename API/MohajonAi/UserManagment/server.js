@@ -41,8 +41,8 @@ const PORT = 5050;
 
 app.use(logger);
 // middleware
-//app.use(credentials);
-//app.use(cors(corsOptions));
+app.use(credentials);
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

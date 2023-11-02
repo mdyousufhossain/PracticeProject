@@ -32,7 +32,7 @@ const MemberLogin: React.FC = () => {
     try {
         console.log(user.email , user.password)
         const response = await fetch(
-            'http://localhost:5050/api/v1/members/login', //localhost:5050/api/v1/member/login
+            'http://localhost:5050/api/v1/member/login', //localhost:5050/api/v1/member/login
             {
               method: 'POST',
               headers: {
@@ -42,10 +42,14 @@ const MemberLogin: React.FC = () => {
                 email: user.email,
                 password: user.password,
               }),
+              credentials: 'include'
             }
           )
+
+          const data  = await response.json()
           if (response.ok) {
             // Set the success message and redirect URL.
+            console.log(data)
             console.log(response)
             setUser({
               ...user,
@@ -58,23 +62,17 @@ const MemberLogin: React.FC = () => {
             console.log(`HTTP response code: ${response.status}`)
             setUser({
               ...user,
-              errorMessage: 'Fill in all the required information',
+              errorMessage: 'duh',
               statusCode: response.status,
             })
-    
-            router.push('/balsal')
-          } else if (response.status === 409) {
-            console.log(`HTTP response code: ${response.status}`)
-            setUser({
-              ...user,
-              errorMessage: 'Email is already in use',
-              statusCode: response.status,
-            })
-    
-            router.push('/bal')
-          }
-    } catch (error) {
-        console.log(error)
+  
+          } 
+    } catch (Error) {
+        setUser({
+          ...user,
+          errorMessage:Error.message,
+        })
+        console.log(user.errorMessage)
     }
   }
   return (
@@ -82,7 +80,7 @@ const MemberLogin: React.FC = () => {
       <div>
         <form 
         method='post'
-        action={'http://localhost:5050/api/v1/members/login'}
+        action={'http://localhost:5050/api/v1/member/login'}
         onSubmit={handleSubmit}>
           <div className='bg-primary-100 text-text-dark500_light700  flex-center flex-col'>
             <div className='p-4'>
@@ -100,7 +98,7 @@ const MemberLogin: React.FC = () => {
             <div className='p-4'>
               <label>Name:</label>
               <input
-                type='password'
+                type='text'
                 name='password'
                 placeholder='Name'
                 value={user.password}
@@ -117,6 +115,8 @@ const MemberLogin: React.FC = () => {
           Submit
         </button>
         </form>
+
+        <h1>{user.errorMessage}</h1>
       </div>
     </>
   )
