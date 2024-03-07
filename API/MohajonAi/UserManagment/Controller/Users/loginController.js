@@ -35,28 +35,42 @@ const loginHandler = async (req, res) => {
   const match = await bcrypt.compare(password, duplicate.password);
 
   if (match) {
-    // Reset login attempts upon successful login
-    // this is direcly from the database we can use cache for this
-    duplicate.loginAttempts = 0;
+    // this is direcly from the database we shoudl't use cache for this bcz cache is for kids 
+    // real man fetch direcly from the database : >
+    duplicate.loginAttempts = 0; // 5 failed attems will lock the account 
+    // and successful login will reset the course  
     duplicate.accountLockedUntil = null; // Reset account lockout
     await duplicate.save();
 
+    /**
+     * dev env will use 15min in prod we will way less cause why not 
+     * but every time user require access token 
+     * user will request in database for refresh token so its kinda costly 
+     * so 30min will do fine  
+     * @todo updtate the expire to the 30min in prod
+     * 
+     */
     const accessToken = jwt.sign(
-      {
-        email: duplicate.email,
+      { userid : duplicate._id,
+        email: duplicate.email
       },
       process.env.ACCESS_TOKEN_SECRET_1,
       { expiresIn: "15m" }
     );
 
-    // Generate refresh token
+    /**
+     * refresh token will generate access token , when accesstoken expire and if user provie right
+     * credential , access token will genrate by requesting refresh token from the database , and 
+     * even if it expire in database a new refresh token will generate then it will prove new access token 
+     * costly right  ? 
+     */
     const refreshToken = jwt.sign(
-      { email },
+      { userid : duplicate._id,
+        email: duplicate.email },
       process.env.REFRESH_TOKEN_SECRET_2,
       { expiresIn: "1d" }
     );
 
-    // Save the refresh token in the database (assuming "duplicate" is the user)
     duplicate.refreshToken = refreshToken;
     await duplicate.save();
 
