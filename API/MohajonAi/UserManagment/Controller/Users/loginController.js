@@ -1,7 +1,7 @@
-const Userdb = require("../../Model/UserModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { logEvents } = require("../../Middleware/logger");
+const User = require("../../Model/user.model");
 //const generateTokensAndSetCookies = require('../config/tokengenerator')
 require("dotenv").config();
 
@@ -13,7 +13,7 @@ const loginHandler = async (req, res) => {
       .sendStatus(400)
       .json({ message: "Please Add email or password" });
 
-  const duplicate = await Userdb.findOne({ email });
+  const duplicate = await User.findOne({ email });
 
   if (!duplicate)
     return res
@@ -41,11 +41,9 @@ const loginHandler = async (req, res) => {
     duplicate.accountLockedUntil = null; // Reset account lockout
     await duplicate.save();
 
-    const roles = Object.values(duplicate.roles).filter(Boolean);
     const accessToken = jwt.sign(
       {
         email: duplicate.email,
-        roles: roles,
       },
       process.env.ACCESS_TOKEN_SECRET_1,
       { expiresIn: "15m" }
@@ -71,7 +69,6 @@ const loginHandler = async (req, res) => {
     });
 
     res.json({
-      roles,
       email,
       accessToken,
       success: `User logged in ${email} ${password}`,

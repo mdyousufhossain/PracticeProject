@@ -56,5 +56,4 @@ describe('generateTokensAndSetCookies', () => {
     expect(tokens).toEqual({ accessToken: 'mockedToken', refreshToken: 'mockedToken' });
   });
   
-  // Add more test cases for error scenarios as needed
 });

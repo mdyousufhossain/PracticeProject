@@ -1,45 +1,35 @@
 const mongoose = require("mongoose");
 
-const memberScemadb = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    maxLength: [12, "Name cant be this long"],
-    minLength: [2, "Name cant be this short"],
   },
   email: {
     type: String,
     required: true,
-    // regex to match valid email
-    // setting a unique att. to prevent having same email to multiple times
+    // regex to match valid email 
+    // setting a unique att. to prevent having same email to multiple times 
     match: [
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       "Please Add Valid Email",
     ],
     unique: true,
     trim: true,
+    minLength: [6, "Password is not strong enough"],
   },
   password: {
     type: String,
     required: true,
-    minLength: [6, "Password is not strong enough"],
   },
-  photo: {
-    type: String,
-  },
-
-  orgenazation: [
-     {
-      Orgid : String,
-      Orgname: String,
-      MemberRole: Number
-    }
-  ],
-  // refresh token from the  jwt
+  orgenazation:[{
+    type : mongoose.SchemaType.ObjectId,
+    ref : 'Organization'
+  }],
+  // roles cannot be set in route gotta do it in database
   refreshToken: {
     type: String,
   },
-
   // Add loginAttempts field to track failed login attempts
   loginAttempts: {
     type: Number,
@@ -51,8 +41,14 @@ const memberScemadb = new mongoose.Schema({
     type: Date,
     default: null, // Indicates that the account is not locked
   },
+
+  createAt: {
+    type : Date ,
+    required:true,
+    default: Date.now
+  }
 });
 
-const ScemaUserMemberdb = mongoose.model("member", memberScemadb);
+const User = mongoose.model("User", userSchema);
 
-module.exports = ScemaUserMemberdb;
+module.exports = User;

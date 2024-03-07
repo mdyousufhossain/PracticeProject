@@ -1,6 +1,8 @@
-const Userdb = require("../../Model/UserModel");
+const User = require("../../Model/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+
+
 
 
 const handleRegister = async (req, res) => {
@@ -8,7 +10,7 @@ const handleRegister = async (req, res) => {
 
   try {
     // Checking if there is a user user
-    const existingUser = await Userdb.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({ error: "This email is already in use" });
     }
@@ -20,23 +22,23 @@ const handleRegister = async (req, res) => {
         .json({ error: "Please fill all the required fields" });
     }
 
+
+
     // Hashing the password
     const hashed = await bcrypt.hash(password, 10);
 
-    const newUser = await Userdb.create({
+    const newUser = await User.create({
       name,
       email,
       password: hashed,
     });
 
-    const user = await Userdb.findOne({ email });
+    const user = await User.findOne({ email });
     // generating cookies with the function
-    const roles = Object.values(user.roles).filter(Boolean);
 
     const accessToken = jwt.sign(
       {
-        email: user.email,
-        roles: roles,
+        email: user.email
       },
       process.env.ACCESS_TOKEN_SECRET_1,
       { expiresIn: "15m" }
