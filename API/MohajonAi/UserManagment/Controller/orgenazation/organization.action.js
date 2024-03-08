@@ -1,17 +1,13 @@
-const asyncHandler = require('express-async-handler');
 const User = require("../../Model/user.model");
-const organization = require("../../Model/organization.model");
+const Organization = require("../../Model/organization.model");
 const Role = require("../../Model/Role.Model");
+const { hasAdminPermission } = require('../../lib/utils');
 
 /**
- * ******strategy******
- * @todo only auth user can search for organization and have a joining request 
- * 
+ * @todo only auth user can search for organization and have a joining request  
  */
 
 
-const asyncHandler = require('express-async-handler');
-const Organization = require("../../Model/organization.model");
 
 async function searchOrganizations(req, res) {
   const { name, location } = req.query;
@@ -29,7 +25,7 @@ async function searchOrganizations(req, res) {
       query.location = location;
     }
 
-    const organizations = await organization.find(query)
+    const organizations = await Organization.find(query)
       .sort({ [sort]: order === 'asc' ? 1 : -1 }); // Apply sorting
 
     res.status(200).json({ organizations });
@@ -39,33 +35,6 @@ async function searchOrganizations(req, res) {
   }
 }
 
-
-
-async function joinRequest(req, res) {
-  const { organizationId } = req.body;
-  const userId = req.user.id;
-
-  // Check if user already belongs to the organization
-  const existingMembership = await Organization.findOne({
-    _id: organizationId,
-    members: { $in: [userId] },
-  });
-  if (existingMembership) {
-    return res.status(400).json({ error: 'User already belongs to this organization' });
-  }
-
-  try {
-    // Update organization to include a pending join request from the user
-    await Organization.findByIdAndUpdate(organizationId, {
-      $push: { joinRequests: userId },
-    });
-
-    res.status(200).json({ message: 'Join request sent successfully!' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Failed to send join request' });
-  }
-}
 
 async function joinRequest(req, res) {
   const { organizationId } = req.body;
@@ -110,31 +79,6 @@ async function getJoinRequests(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to get join requests' });
-  }
-}
-
-async function hasAdminPermission(organizationId, adminId) {
-  try {
-    // Find the organization
-    const organization = await Organization.findById(organizationId)
-      .populate({ path: 'roles', match: { user: adminId } }); // Filter roles for the admin
-
-    if (!organization) {
-      return false; // Organization not found
-    }
-    // Check if the admin has an "Admin" role
-    const adminRole = organization.roles.find((role) => role.name === 'Admin' && role.user.toString() === adminId);
-
-    // Check if the user is the organization's creator
-    const isCreator = organization.creatorId.toString() === adminId;
-
-    // Return true if admin role is found or user is the creator
-    return !!adminRole || isCreator;
-  } catch (error) {
-    console.error(error);
-    // Handle potential errors (e.g., database errors)
-    console.log(error)
-    return false; // Consider returning false on error for safety
   }
 }
 

@@ -1,18 +1,16 @@
 const mongoose = require('mongoose')
 
-const productSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  type : {
-    type: String,
-    required: true,
-  },
+const StockSchema = new mongoose.Schema({
+  availble: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true 
+  }],
+  sold: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product',
+    required: true 
+  }],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model for the user who created the product
@@ -23,7 +21,7 @@ const productSchema = new mongoose.Schema({
     ref: 'Organization', // Reference to the User model for the user who created the product
     required: true,
   },
-  createAt: {
+  createdAt: {
     type : Date ,
     required:true,
     default: Date.now
@@ -31,6 +29,6 @@ const productSchema = new mongoose.Schema({
   // You can add more fields as needed for your specific project
 })
 
-const Product = mongoose.model('Product', productSchema)
+const Stock = mongoose.model('Stock', StockSchema)
 
-module.exports = Product
+module.exports = Stock

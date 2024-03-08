@@ -15,7 +15,7 @@ const verifyAdminJWT = (req, res, next) => {
 
         // Token is valid, set user information in the request object
         req.email = decoded.email;
-        req.roles = decoded.roles;
+        req.userid = decoded.userid;
         next();
     });
 };
