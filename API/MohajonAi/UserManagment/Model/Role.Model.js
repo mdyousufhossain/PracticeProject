@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
-
+/**
+ **Editor role** 
+ *  create memo 
+ *  add buyer 
+ *  add product
+ *  
+ */
 const roleSchema = new mongoose.Schema({
     name: String,
     company: {
@@ -14,9 +20,9 @@ const roleSchema = new mongoose.Schema({
     },
     permissions: [{
       type : String,
-      default : '5030'
+      default : '5030' // editor 
     }],
-    createAt: {
+    createdAt: {
       type : Date ,
       required:true,
       default: Date.now

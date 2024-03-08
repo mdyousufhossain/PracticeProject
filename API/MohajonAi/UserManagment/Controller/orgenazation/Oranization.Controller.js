@@ -1,6 +1,6 @@
 const { Mongoose } = require('mongoose')
 const Role = require('../../Model/Role.Model')
-const Organization = require('../../Model/organization.model')
+const Organization = require('../../Model/BMS/Organization.Model')
 const User = require('../../Model/user.model')
 const { hasAdminPermission } = require('../../lib/utils')
 
@@ -22,12 +22,10 @@ async function createOrganization(req, res) {
 
   //
   if (!name || !location) {
-    return res
-      .status(400)
-      .json({
-        error:
-          'Please fill all required fields (name, package, location, business type)',
-      })
+    return res.status(400).json({
+      error:
+        'Please fill all required fields (name, package, location, business type)',
+    })
   }
 
   // Check for existing organization with the same name
@@ -82,11 +80,9 @@ async function deleteOrganization(req, res) {
   const isAdmin = await hasAdminPermission(orgId, userId)
 
   if (!isAdmin) {
-    return res
-      .status(403)
-      .json({
-        message: 'Unauthorized: You are not allowed to approve requests',
-      })
+    return res.status(403).json({
+      message: 'Unauthorized: You are not allowed to approve requests',
+    })
   }
   try {
     // Check if the organization exists

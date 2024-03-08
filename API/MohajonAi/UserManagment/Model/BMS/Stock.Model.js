@@ -11,6 +11,14 @@ const StockSchema = new mongoose.Schema({
     ref: 'Product',
     required: true 
   }],
+  invested : {
+    type : Number,
+    required : true 
+  },
+  profit : {
+    type : Number,
+    required : true 
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model for the user who created the product

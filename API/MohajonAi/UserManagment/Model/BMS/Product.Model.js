@@ -9,8 +9,16 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  type : {
+  type: {
     type: String,
+    required: true,
+  },
+  rawPrice: {
+    type: Number,
+    required: true,
+  },
+  FinalPrice: {
+    type: Number,
     required: true,
   },
   createdBy: {
@@ -23,11 +31,11 @@ const productSchema = new mongoose.Schema({
     ref: 'Organization', // Reference to the User model for the user who created the product
     required: true,
   },
-  createAt: {
-    type : Date ,
-    required:true,
-    default: Date.now
-  }
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
   // You can add more fields as needed for your specific project
 })
 

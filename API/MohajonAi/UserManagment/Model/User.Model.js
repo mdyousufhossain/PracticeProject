@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
     default: null, // Indicates that the account is not locked
   },
 
-  createAt: {
+  createdAt: {
     type : Date ,
     required:true,
     default: Date.now
