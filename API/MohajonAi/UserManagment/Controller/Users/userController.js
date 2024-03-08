@@ -9,7 +9,7 @@ class MainController {
     try {
       const userList = await this.db.find();
 
-      const item = new Array(userList)
+      // const item = new Array(userList)
 
       //console.log(userList.length)
       if (!userList) return res.status(204).json({ message: "No User found" });

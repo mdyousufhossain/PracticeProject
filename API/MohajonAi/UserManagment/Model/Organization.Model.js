@@ -13,10 +13,16 @@ const organizationSchema = new mongoose.Schema({
   package:{
     type:String
   },
+  location : { type:String},
+  type : {type:'String'},
   members: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required:true
+  }],
+  joinRequests: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }],
   roles: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -36,9 +42,9 @@ const organizationSchema = new mongoose.Schema({
     }
 });
 
-const OrgSchema = mongoose.model("Organization", organizationSchema);
+const organization = mongoose.model("Organization", organizationSchema);
 
-module.exports = OrgSchema;
+module.exports = organization;
 
 
 /**
