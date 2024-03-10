@@ -31,6 +31,10 @@ const loginHandler = async (req, res) => {
   }
 
   // comparing password
+  /**
+   * we must use extra bit of hashing in prod just keep that in minde
+   * @todo imrpove hashing before prod
+   */
   const match = await bcrypt.compare(password, duplicate.password);
 
   if (match) {
@@ -50,7 +54,8 @@ const loginHandler = async (req, res) => {
      * 
      */
     const accessToken = jwt.sign(
-      { userid : duplicate._id,
+      { 
+        userid : duplicate._id,
         email: duplicate.email
       },
       process.env.ACCESS_TOKEN_SECRET_1,
@@ -78,7 +83,7 @@ const loginHandler = async (req, res) => {
       httpOnly: true,
       //sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000,
-      // secure: true, // Uncomment this line if you are using HTTPS in production
+      // secure: "lex", // Uncomment this line if you are using HTTPS in production
     });
 
     res.json({

@@ -13,20 +13,16 @@ const refresh = require("./Route/adminRoute/refresh");
 const registerRoute = require("./Route/adminRoute/registerRoute");
 const logoutRoute = require("./Route/adminRoute/logoutRoute");
 const loginRoute = require("./Route/adminRoute/loginRoute");
+/**
+ * organization route 
+ */
+const creatingOrganization = require('./Route/organizationRoute/createRoute')
 
-// member statistic
-// const memberRoute = require('./Route/adminRoute/api/memberRoute')
-// //member route
-// const blogRoute = require('./Route/blogRoute/api/blogRoute')
+// middleware
 
-// org 
-// const orgCreateRoute = require('./Route/OrgRout/orgCreateRoute')
-// const userjoinRoute = require('./Route/OrgRout/userJoinRoute')
-
-//middleware
-//const verifyJWT = require("./Middleware/verifyJWT");
 const credentials = require("./Middleware/credentials");
 const path = require("path");
+const verifyJWT = require("./Middleware/verifyJWT");
 
 // server
 const app = express();
@@ -68,11 +64,9 @@ app.use("/api/v1/", registerRoute); // register localhost:5050/api/v1/register
 app.use("/api/v1/", loginRoute); //  login localhost:5050/api/v1/login
 app.use("/api/v1/", refresh); // refresh token localhost:5050/api/v1/token
 app.use("/api/v1/", logoutRoute);// logout
+app.use(verifyJWT)
+app.use("/api/v1/", creatingOrganization)
 
-
-app.use("/api/v1/success", (req, res) => {
-  res.render("success", { errors: null, name: "", email: "" });
-});
 /*
  * 
  * This is member for orgenation route
@@ -85,7 +79,6 @@ app.use("/api/v1/success", (req, res) => {
 // app.use("/api/v1/", userRoute);
 
 
-// app.use(verifyJWT); // authentication
 // app.use('/api/v1/member', orgCreateRoute)
 // app.use('/api/v1/member', userjoinRoute)
 // app.use('/api/v1/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts

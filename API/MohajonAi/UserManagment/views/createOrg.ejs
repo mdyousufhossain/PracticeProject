@@ -1,0 +1,32 @@
+<!-- createOrganization.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Organization</title>
+  </head>
+  <body>
+    <h1>Create Organization</h1>
+    <form action="/api/v1/createOrg" method="POST">
+      <label for="name">Organization Name:</label>
+      <input type="text" id="name" name="name" required />
+      <br />
+      <label for="logo">Logo URL:</label>
+      <input type="text" id="logo" name="logo" />
+      <br />
+      <label for="moto">Moto:</label>
+      <input type="text" id="moto" name="moto" />
+      <br />
+      <label for="package">Package:</label>
+      <input type="text" id="package" name="package" required />
+      <br />
+      <label for="location">Location:</label>
+      <input type="text" id="location" name="location" required />
+      <br />
+      <!-- Add more fields as needed -->
+      <button type="submit">Create Organization</button>
+    </form>
+  </body>
+</html>

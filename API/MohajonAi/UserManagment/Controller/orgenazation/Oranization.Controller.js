@@ -1,7 +1,7 @@
-const { Mongoose } = require('mongoose')
+const  mongoose  = require('mongoose')
 const Role = require('../../Model/Role.Model')
 const Organization = require('../../Model/BMS/Organization.Model')
-const User = require('../../Model/user.model')
+const User = require('../../Model/User.Model')
 const { hasAdminPermission } = require('../../lib/utils')
 
 /**
@@ -18,7 +18,9 @@ const { hasAdminPermission } = require('../../lib/utils')
 
 async function createOrganization(req, res) {
   const { name, logo, moto, package, location } = req.body
-  const userId = req.user.id // user._id ?
+  const userId = req.userid // user._id ?
+
+  console.log(userId)
 
   //
   if (!name || !location) {
@@ -52,7 +54,7 @@ async function createOrganization(req, res) {
       permissions: ['*'], // all permissions for admin
     })
 
-    const session = await Mongoose.startSession()
+    const session = await mongoose.startSession()
     session.startTransaction()
 
     await organization.save({ session })
@@ -87,7 +89,7 @@ async function deleteOrganization(req, res) {
   try {
     // Check if the organization exists
     const organization = await Organization.findById(orgId)
-    const session = await Mongoose.startSession()
+    const session = await mongoose.startSession()
     session.startTransaction()
     // Remove organization from member lists of associated users
     await User.updateMany(

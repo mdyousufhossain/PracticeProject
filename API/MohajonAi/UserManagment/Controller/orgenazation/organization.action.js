@@ -1,4 +1,4 @@
-const User = require('../../Model/user.model')
+const User = require('../../Model/User.Model')
 const Organization = require('../../Model/BMS/Organization.Model')
 const Role = require('../../Model/Role.Model')
 const { hasAdminPermission } = require('../../lib/utils')
