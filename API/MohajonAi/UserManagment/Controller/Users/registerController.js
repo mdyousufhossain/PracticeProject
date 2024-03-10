@@ -1,7 +1,9 @@
 const asyncHandler = require('express-async-handler');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const User = require('../../Model/user.model');
+const User = require('../../Model/User.Model')
+
+
 
 const handleRegister = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -60,7 +62,7 @@ const handleRegister = asyncHandler(async (req, res) => {
     email,
     accessToken,
     success: `New user ${name} ${email} created!`,
-  });
+  })
 });
 
 module.exports = handleRegister;

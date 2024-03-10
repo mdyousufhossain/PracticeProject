@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const User = require("../../Model/UserModel");
+
+const User = require("../../Model/User.Model");
 require("dotenv").config();
 
 const handleLogout = async (req, res) => {

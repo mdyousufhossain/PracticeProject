@@ -6,40 +6,42 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const corsOptions = require("./config/corsOptions");
 const { logger } = require("./Middleware/logger");
-const errorHandler = require("./Middleware/errorHandle");
 
 //admin routes
-const userRoute = require("./Route/adminRoute/api/userRoute");
+//const userRoute = require("./Route/adminRoute/api/userRoute");
 const refresh = require("./Route/adminRoute/refresh");
 const registerRoute = require("./Route/adminRoute/registerRoute");
 const logoutRoute = require("./Route/adminRoute/logoutRoute");
 const loginRoute = require("./Route/adminRoute/loginRoute");
 
 // member statistic
-const memberRoute = require('./Route/adminRoute/api/memberRoute')
-//member route
-const memberRegisterRoute = require('./Route/memberRoute/memberRegisterRoute')
-const memberloginRoute = require('./Route/memberRoute/memberLoginRoute')
-const memberLogoutRoute = require('./Route/memberRoute/memberLogoutRoute')
-
-// blog route
-
-const createPostRoute = require('./Controller/blog/blogMakerController')
-const blogRoute = require('./Route/blogRoute/api/blogRoute')
+// const memberRoute = require('./Route/adminRoute/api/memberRoute')
+// //member route
+// const blogRoute = require('./Route/blogRoute/api/blogRoute')
 
 // org 
-const orgCreateRoute = require('./Route/OrgRout/orgCreateRoute')
-const userjoinRoute = require('./Route/OrgRout/userJoinRoute')
+// const orgCreateRoute = require('./Route/OrgRout/orgCreateRoute')
+// const userjoinRoute = require('./Route/OrgRout/userJoinRoute')
 
 //middleware
-const verifyJWT = require("./Middleware/verifyJWT");
+//const verifyJWT = require("./Middleware/verifyJWT");
 const credentials = require("./Middleware/credentials");
+const path = require("path");
 
 // server
 const app = express();
 const PORT = 5050;
 
 app.use(logger);
+
+app.set('view engine', 'ejs');
+
+// Specify the directory where EJS templates will be stored
+app.set('views', path.join(__dirname, 'views'));
+
+// app.use("/bal", (req, res) => {
+//   res.render("register", { errors: null, name: "", email: "" });
+// });
 // middleware
 app.use(credentials);
 app.use(cors(corsOptions));
@@ -68,25 +70,25 @@ app.use("/api/v1/", refresh); // refresh token localhost:5050/api/v1/token
 app.use("/api/v1/", logoutRoute);// logout
 
 
+app.use("/api/v1/success", (req, res) => {
+  res.render("success", { errors: null, name: "", email: "" });
+});
 /*
  * 
  * This is member for orgenation route
  * 
 */
 
-app.use('/api/v1/', memberRegisterRoute) // member register route localhost:5050/api/v2/member/register'
-app.use('/api/v1/', memberloginRoute ) // member login or auth route  : localhost:5050/api/v1/member/login 
-app.use('/api/v1/', memberLogoutRoute ) // member logout or auth route  : localhost:5050/api/v2/member/logout
 
 // admin only admin can access 
-app.use('/api/v1/members', memberRoute)
-app.use("/api/v1/", userRoute);
+// app.use('/api/v1/members', memberRoute)
+// app.use("/api/v1/", userRoute);
 
 
-app.use(verifyJWT); // authentication
-app.use('/api/v1/member', orgCreateRoute)
-app.use('/api/v1/member', userjoinRoute)
-app.use('/api/v1/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
+// app.use(verifyJWT); // authentication
+// app.use('/api/v1/member', orgCreateRoute)
+// app.use('/api/v1/member', userjoinRoute)
+// app.use('/api/v1/member', blogRoute) // find all the post localhost:5050/api/v2/member/blog/posts
 //app.use('/api/v1/member' , createPostRoute) // auth member blogpost localhost:5050/api/v2/member/blog/create
 
 // app.use('*', (req, res) => {

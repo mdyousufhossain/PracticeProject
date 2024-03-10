@@ -1,11 +1,11 @@
-const MainController = require("../../../Controller/admin/userController");
+const MainController = require('../../../Controller/Users/User.Controller');
 const verifyRoles = require("../../../Middleware/verifyRoles");
 const verifyAdminJWT = require('../../../Middleware/verifyadmin')
 require("dotenv").config();
 const ROLES_LIST = require("../../../config/Roles_List");
 const express = require("express");
 const router = express.Router();
-const userDb = require("../../../Model/UserModel");
+const userDb = require("../../../Model/User.Model");
 
 const UserMainController = new MainController(userDb);
 

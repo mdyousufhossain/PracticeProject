@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="../style/style.css"> </head>
+<body>
+    <h1>Create an Account</h1>
+
+    <% if (errors) { %>  <div class="alert alert-danger">
+            <% for (let error of errors) { %>
+                <p><%= error.msg %></p>
+            <% } %>
+        </div>
+    <% } %>
+
+    <form action="/api/v1/register" method="post">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= name || '' %>"> </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="<%= email || '' %>"> </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

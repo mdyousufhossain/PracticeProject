@@ -1,8 +1,12 @@
 const express = require("express");
+const handleRegister = require("./../../Controller/Users/registerController");
 const router = express.Router();
-const loginRateLimiter = require("../../Middleware/loginRateLimit");
-const handleRegister = require("../../Controller/admin/registerController");
 
-router.post("/register", loginRateLimiter, handleRegister);
+router.get("/register", (req, res) => {
+    res.render("register", { errors: null, name: "", email: "" });
+  });
+  
+  // Handle registration form submission
+  router.post("/register", handleRegister);
 
 module.exports = router;
